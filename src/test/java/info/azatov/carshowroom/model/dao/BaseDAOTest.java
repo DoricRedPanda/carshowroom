@@ -31,7 +31,7 @@ class BaseDAOTest {
         session.beginTransaction();
         session.createQuery("DELETE FROM Contract").executeUpdate();
         session.createQuery("DELETE FROM Car").executeUpdate();
-        session.createQuery("DELETE FROM Model").executeUpdate();
+        session.createQuery("DELETE FROM AutoModel").executeUpdate();
         session.createQuery("DELETE FROM Client").executeUpdate();
         session.createSQLQuery("ALTER SEQUENCE CONTRACT_SEQ RESTART WITH 1;").executeUpdate();
         session.createSQLQuery("ALTER SEQUENCE CLIENT_SEQ RESTART WITH 1;").executeUpdate();

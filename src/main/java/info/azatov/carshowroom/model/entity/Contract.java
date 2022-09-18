@@ -14,7 +14,6 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 @NoArgsConstructor
-@AllArgsConstructor
 public class Contract implements BaseEntity<Long> {
 
     public enum ContractStatus {

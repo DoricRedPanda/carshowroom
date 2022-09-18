@@ -1,8 +1,8 @@
 package info.azatov.carshowroom.model.dao;
 
+import info.azatov.carshowroom.model.entity.AutoModel;
 import info.azatov.carshowroom.model.entity.Car;
 import info.azatov.carshowroom.model.entity.Client;
-import info.azatov.carshowroom.model.entity.Model;
 import info.azatov.carshowroom.model.entity.Contract;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -32,7 +32,7 @@ class ContractDAOTest {
     private ClientDAO clientDAO;
 
     @Autowired
-    private ModelDAO modelDAO;
+    private AutoModelDAO autoModelDAO;
 
     @Autowired
     private ContractDAO contractDAO;
@@ -46,7 +46,7 @@ class ContractDAOTest {
         session.beginTransaction();
         session.createQuery("DELETE FROM Contract").executeUpdate();
         session.createQuery("DELETE FROM Car").executeUpdate();
-        session.createQuery("DELETE FROM Model").executeUpdate();
+        session.createQuery("DELETE FROM AutoModel").executeUpdate();
         session.createQuery("DELETE FROM Client").executeUpdate();
         session.createSQLQuery("ALTER SEQUENCE CONTRACT_SEQ RESTART WITH 1;").executeUpdate();
         session.createSQLQuery("ALTER SEQUENCE CLIENT_SEQ RESTART WITH 1;").executeUpdate();
@@ -64,18 +64,18 @@ class ContractDAOTest {
         clients.add(new Client(null,"Andrey Stolyarov", "Russia", null, null));
         clientDAO.saveCollection(clients);
 
-        Collection<Model> models = new ArrayList<>();
-        models.add(new Model("Maxima", "Nissan"));
-        models.add(new Model("Qashqai", "Nissan"));
-        models.add(new Model("Rio", "Kia"));
-        models.add(new Model("Optima", "Kia"));
-        models.add(new Model("Forte", "Kia"));
-        modelDAO.saveCollection(models);
+        Collection<AutoModel> autoModels = new ArrayList<>();
+        autoModels.add(new AutoModel("Maxima", "Nissan"));
+        autoModels.add(new AutoModel("Qashqai", "Nissan"));
+        autoModels.add(new AutoModel("Rio", "Kia"));
+        autoModels.add(new AutoModel("Optima", "Kia"));
+        autoModels.add(new AutoModel("Forte", "Kia"));
+        autoModelDAO.saveCollection(autoModels);
 
         Collection<Car> cars = new ArrayList<>();
         cars.add(new Car(
                 null,
-                modelDAO.getById(1L),
+                autoModelDAO.getById(1L),
                 "qwerty",
                 300000.0,
                 0.0,
@@ -91,7 +91,7 @@ class ContractDAOTest {
         ));
         cars.add(new Car(
                 null,
-                modelDAO.getById(2L),
+                autoModelDAO.getById(2L),
                 "qwerty",
                 300000.0,
                 0.0,

@@ -1,6 +1,6 @@
 \connect carshow
 
-INSERT INTO model
+INSERT INTO autoModel
 	("name", "year", "make") VALUES
 	('Maxima', 2022, 'Nissan'),
         ('Qashqai', 2022, 'Nissan'),

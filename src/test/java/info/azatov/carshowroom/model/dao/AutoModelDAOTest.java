@@ -1,7 +1,6 @@
 package info.azatov.carshowroom.model.dao;
 
 import info.azatov.carshowroom.model.entity.AutoModel;
-import info.azatov.carshowroom.model.entity.Car;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,26 +10,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestPropertySource(locations="classpath:application.properties")
-class CarDAOTest {
-
+public class AutoModelDAOTest {
     @Autowired
     private SessionFactory sessionFactory;
 
     @Autowired
     private AutoModelDAO autoModelDAO;
 
-    @Autowired
-    private CarDAO carDAO;
+    @Test
+    void getModelsByName() {
+        List<AutoModel> autoModels = autoModelDAO.getModelsByName("Rio");
+        assertEquals(1, autoModels.size());
+        assertEquals("Rio", autoModels.get(0).getName());
+        assertEquals("Kia", autoModels.get(0).getMake());
+    }
+
+    @Test
+    void getModelsByMake() {
+        List<AutoModel> autoModels = autoModelDAO.getModelsByMake("Kia");
+        assertEquals(3, autoModels.size());
+        assertEquals("Kia", autoModels.get(0).getMake());
+    }
 
     @BeforeEach
     void setUp() {
@@ -53,73 +62,7 @@ class CarDAOTest {
         autoModels.add(new AutoModel("Optima", "Kia"));
         autoModels.add(new AutoModel("Forte", "Kia"));
         autoModelDAO.saveCollection(autoModels);
-
-        Collection<Car> cars = new ArrayList<>();
-        cars.add(new Car(
-                null,
-                autoModelDAO.getById(1L),
-                "qwerty",
-                300000.0,
-                0.0,
-                Date.valueOf("2015-03-31"),
-                1995,
-                103.0,
-                203.0,
-                4,
-                "AT",
-                "radio",
-                "black",
-                "high"
-                ));
-        cars.add(new Car(
-                null,
-                autoModelDAO.getById(2L),
-                "qwerty",
-                300000.0,
-                0.0,
-                Date.valueOf("2018-01-01"),
-                1332,
-                103.0,
-                197.0,
-                4,
-                "AT",
-                "radio, gps",
-                "blue",
-                "high"
-        ));
-        carDAO.saveCollection(cars);
     }
 
-    @Test
-    void search1() {
-        List<Car> res = carDAO.search(null, null,null,"Maxima",null);
-        assertEquals(1, res.size());
-    }
-    @Test
-    void search2() {
-        List<Car> res = carDAO.search(null, 100000.0,400000.0,null,"Nissan");
-        assertEquals(2, res.size());
-    }
-    @Test
-    void search3() {
-        Car filter = new Car(
-                null,
-                autoModelDAO.getById(1L),
-                "qwerty",
-                300000.0,
-                0.0,
-                Date.valueOf("2010-01-01"),
-                1000,
-                100.0,
-                198.0,
-                4,
-                "AT",
-                "radio",
-                "black",
-                "high"
-        );
-        List<Car> res = carDAO.search(filter, null,null,null,null);
-        assertEquals(1, res.size());
-    }
 
 }

@@ -1,0 +1,209 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > BaseDAOImpl</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">info.azatov.carshowroom.model.dao.impl</a>
+</div>
+
+<h1>Coverage Summary for Class: BaseDAOImpl (info.azatov.carshowroom.model.dao.impl)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">BaseDAOImpl</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (9/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (41/41)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">BaseDAOImpl$$FastClassBySpringCGLIB$$ddba6851</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (9/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (41/41)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package info.azatov.carshowroom.model.dao.impl;
+&nbsp;
+&nbsp;import org.hibernate.Session;
+&nbsp;import org.hibernate.SessionFactory;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+&nbsp;import org.springframework.stereotype.Repository;
+&nbsp;import info.azatov.carshowroom.model.dao.BaseDAO;
+&nbsp;import info.azatov.carshowroom.model.entity.BaseEntity;
+&nbsp;
+&nbsp;import javax.persistence.criteria.CriteriaQuery;
+&nbsp;import java.util.Collection;
+&nbsp;
+&nbsp;@Repository
+&nbsp;public abstract class BaseDAOImpl&lt;T extends BaseEntity&lt;ID&gt;, ID extends Number&gt; implements BaseDAO&lt;T, ID&gt; {
+&nbsp;
+&nbsp;    protected SessionFactory sessionFactory;
+&nbsp;
+&nbsp;    protected Class&lt;T&gt; persistentClass;
+&nbsp;
+<b class="fc">&nbsp;    public BaseDAOImpl(Class&lt;T&gt; entityClass) {</b>
+<b class="fc">&nbsp;        this.persistentClass = entityClass;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Autowired
+&nbsp;    public void setSessionFactory(LocalSessionFactoryBean sessionFactory) {
+<b class="fc">&nbsp;        this.sessionFactory = sessionFactory.getObject();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public T getById(ID i) {
+<b class="fc">&nbsp;        try (Session session = sessionFactory.openSession()) {</b>
+<b class="fc">&nbsp;            return session.get(persistentClass, i);</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public Collection&lt;T&gt; getAll() {
+<b class="fc">&nbsp;        try (Session session = sessionFactory.openSession()) {</b>
+<b class="fc">&nbsp;            CriteriaQuery&lt;T&gt; criteriaQuery = session.getCriteriaBuilder().createQuery(persistentClass);</b>
+<b class="fc">&nbsp;            criteriaQuery.from(persistentClass);</b>
+<b class="fc">&nbsp;            return session.createQuery(criteriaQuery).getResultList();</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void save(T entity) {
+<b class="fc">&nbsp;        try (Session session = sessionFactory.openSession()) {</b>
+<b class="fc">&nbsp;            if (entity.getId() != null) {</b>
+<b class="fc">&nbsp;                entity.setId(null);</b>
+&nbsp;            }
+<b class="fc">&nbsp;            session.beginTransaction();</b>
+<b class="fc">&nbsp;            session.saveOrUpdate(entity);</b>
+<b class="fc">&nbsp;            session.getTransaction().commit();</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void saveCollection(Collection&lt;T&gt; entities) {
+<b class="fc">&nbsp;        try (Session session = sessionFactory.openSession()) {</b>
+<b class="fc">&nbsp;            session.beginTransaction();</b>
+<b class="fc">&nbsp;            for (T entity : entities) {</b>
+<b class="fc">&nbsp;                this.save(entity);</b>
+<b class="fc">&nbsp;            }</b>
+<b class="fc">&nbsp;            session.getTransaction().commit();</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void update(T entity) {
+<b class="fc">&nbsp;        try (Session session = sessionFactory.openSession()) {</b>
+<b class="fc">&nbsp;            session.beginTransaction();</b>
+<b class="fc">&nbsp;            session.update(entity);</b>
+<b class="fc">&nbsp;            session.getTransaction().commit();</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void delete(T entity) {
+<b class="fc">&nbsp;        try (Session session = sessionFactory.openSession()) {</b>
+<b class="fc">&nbsp;            session.beginTransaction();</b>
+<b class="fc">&nbsp;            session.delete(entity);</b>
+<b class="fc">&nbsp;            session.getTransaction().commit();</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void deleteById(ID id) {
+<b class="fc">&nbsp;        try (Session session = sessionFactory.openSession()) {</b>
+<b class="fc">&nbsp;            session.beginTransaction();</b>
+<b class="fc">&nbsp;            T entity = getById(id);</b>
+<b class="fc">&nbsp;            session.delete(entity);</b>
+<b class="fc">&nbsp;            session.getTransaction().commit();</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2022-09-18 15:49</div>
+</div>
+</body>
+</html>

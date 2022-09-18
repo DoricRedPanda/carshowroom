@@ -26,7 +26,7 @@ public class Car implements BaseEntity<Long> {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "model_id", nullable = false)
     @NonNull
-    private Model model;
+    private AutoModel model;
 
     @Column(nullable = false, name = "registration_plate")
     private String registration_plate;

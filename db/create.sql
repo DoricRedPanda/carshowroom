@@ -4,7 +4,7 @@ CREATE DATABASE carshow;
 
 \connect carshow
 
-CREATE TABLE "model" (
+CREATE TABLE "automodel" (
   "model_id" serial PRIMARY KEY,
   "name" text NOT NULL,
   "year" int NOT NULL,
@@ -28,7 +28,7 @@ CREATE TABLE "car" (
   "saloon" text,
   CONSTRAINT "FK_car.model_id"
     FOREIGN KEY ("model_id")
-      REFERENCES "model"("model_id")
+      REFERENCES "automodel"("model_id")
 );
 
 CREATE TABLE "client" (

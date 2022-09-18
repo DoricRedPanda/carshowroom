@@ -1,0 +1,172 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > WebConfig</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">info.azatov.carshowroom</a>
+</div>
+
+<h1>Coverage Summary for Class: WebConfig (info.azatov.carshowroom)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">WebConfig</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (16/16)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">WebConfig$$EnhancerBySpringCGLIB$$4aadfe43</td>
+  </tr>
+  <tr>
+    <td class="name">WebConfig$$EnhancerBySpringCGLIB$$4aadfe43$$FastClassBySpringCGLIB$$3fb6f26e</td>
+  </tr>
+  <tr>
+    <td class="name">WebConfig$$FastClassBySpringCGLIB$$920073f9</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (16/16)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package info.azatov.carshowroom;
+&nbsp;
+&nbsp;import org.springframework.context.annotation.Bean;
+&nbsp;import org.springframework.context.annotation.Configuration;
+&nbsp;import org.springframework.web.servlet.ViewResolver;
+&nbsp;import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+&nbsp;import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+&nbsp;import org.thymeleaf.spring5.SpringTemplateEngine;
+&nbsp;import org.thymeleaf.spring5.view.ThymeleafViewResolver;
+&nbsp;import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
+&nbsp;
+&nbsp;@Configuration
+<b class="fc">&nbsp;public class WebConfig implements WebMvcConfigurer {</b>
+&nbsp;
+&nbsp;    @Bean
+&nbsp;    public ClassLoaderTemplateResolver templateResolver() {
+&nbsp;
+<b class="fc">&nbsp;        var templateResolver = new ClassLoaderTemplateResolver();</b>
+&nbsp;
+<b class="fc">&nbsp;        templateResolver.setPrefix(&quot;templates/&quot;);</b>
+<b class="fc">&nbsp;        templateResolver.setCacheable(true);</b>
+<b class="fc">&nbsp;        templateResolver.setSuffix(&quot;.html&quot;);</b>
+<b class="fc">&nbsp;        templateResolver.setTemplateMode(&quot;HTML&quot;);</b>
+<b class="fc">&nbsp;        templateResolver.setCharacterEncoding(&quot;UTF-8&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        return templateResolver;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Bean
+&nbsp;    public SpringTemplateEngine templateEngine() {
+&nbsp;
+<b class="fc">&nbsp;        var templateEngine = new SpringTemplateEngine();</b>
+<b class="fc">&nbsp;        templateEngine.setTemplateResolver(templateResolver());</b>
+&nbsp;
+<b class="fc">&nbsp;        return templateEngine;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Bean
+&nbsp;    public ViewResolver viewResolver() {
+&nbsp;
+<b class="fc">&nbsp;        var viewResolver = new ThymeleafViewResolver();</b>
+&nbsp;
+<b class="fc">&nbsp;        viewResolver.setTemplateEngine(templateEngine());</b>
+<b class="fc">&nbsp;        viewResolver.setCharacterEncoding(&quot;UTF-8&quot;);</b>
+&nbsp;
+<b class="fc">&nbsp;        return viewResolver;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @Override
+&nbsp;    public void addViewControllers(ViewControllerRegistry registry) {
+<b class="fc">&nbsp;        registry.addViewController(&quot;/&quot;).setViewName(&quot;index&quot;);</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2022-09-18 15:49</div>
+</div>
+</body>
+</html>
