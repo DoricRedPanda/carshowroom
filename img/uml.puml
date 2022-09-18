@@ -1,0 +1,28 @@
+@startuml
+!theme reddress-lightorange
+'skinparam linetype ortho'
+caption Схема навигации
+scale 2.0
+component [Главная страница] as mainPage
+component [Автомобили] as automobiles
+component [Автомобиль] as automobile
+component [Марки] as marques
+component [Марка] as marque
+component [Клиенты] as clients
+component [Клиент] as client
+component [Заказы] as orders
+component [Заказ] as order
+
+
+mainPage -d-> automobiles: Список автомобилей
+mainPage -d-> clients : Список клиентов
+mainPage -d-> orders : Список заказов
+
+automobiles -d-> marques : Список марок
+marques -d-> marque : Конкретная марка
+automobiles -d-> automobile: Конкретный автомобиль
+clients -d-> client : Конкретный клиент
+orders -d-> order : Конкретный заказ
+
+@enduml
+
