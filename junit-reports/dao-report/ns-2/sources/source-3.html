@@ -1,0 +1,195 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ClientDAOImpl</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">info.azatov.carshowroom.model.dao.impl</a>
+</div>
+
+<h1>Coverage Summary for Class: ClientDAOImpl (info.azatov.carshowroom.model.dao.impl)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ClientDAOImpl</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (33/33)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">ClientDAOImpl$$EnhancerBySpringCGLIB$$3d784392</td>
+  </tr>
+  <tr>
+    <td class="name">ClientDAOImpl$$EnhancerBySpringCGLIB$$3d784392$$FastClassBySpringCGLIB$$ffd7730c</td>
+  </tr>
+  <tr>
+    <td class="name">ClientDAOImpl$$FastClassBySpringCGLIB$$7aca2a17</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (33/33)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package info.azatov.carshowroom.model.dao.impl;
+&nbsp;
+&nbsp;import info.azatov.carshowroom.model.dao.ClientDAO;
+&nbsp;import info.azatov.carshowroom.model.entity.Car;
+&nbsp;import info.azatov.carshowroom.model.entity.Client;
+&nbsp;import info.azatov.carshowroom.model.entity.Contract;
+&nbsp;import org.hibernate.Session;
+&nbsp;import org.hibernate.query.Query;
+&nbsp;import org.springframework.stereotype.Repository;
+&nbsp;
+&nbsp;import javax.persistence.criteria.CriteriaBuilder;
+&nbsp;import javax.persistence.criteria.CriteriaQuery;
+&nbsp;import javax.persistence.criteria.Predicate;
+&nbsp;import javax.persistence.criteria.Root;
+&nbsp;import java.sql.Date;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;import java.util.stream.Collectors;
+&nbsp;
+&nbsp;@Repository
+&nbsp;public class ClientDAOImpl extends BaseDAOImpl&lt;Client, Long&gt; implements ClientDAO {
+&nbsp;
+&nbsp;	public ClientDAOImpl() {
+<b class="fc">&nbsp;		super(Client.class);</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	@Override
+&nbsp;	public List&lt;Client&gt; getAllClientByName(String clientName) {
+<b class="fc">&nbsp;		try (Session session = sessionFactory.openSession()) {</b>
+<b class="fc">&nbsp;			Query&lt;Client&gt; query = session.createQuery(&quot;FROM Client WHERE name LIKE :gotName&quot;, Client.class)</b>
+<b class="fc">&nbsp;					.setParameter(&quot;gotName&quot;, likeExpr(clientName));</b>
+<b class="fc">&nbsp;			return query.getResultList().size() == 0 ? null : query.getResultList();</b>
+<b class="fc">&nbsp;		}</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	@Override
+&nbsp;	public Client getSingleClientByName(String clientName) {
+<b class="fc">&nbsp;		List&lt;Client&gt; candidates = this.getAllClientByName(clientName);</b>
+<b class="fc">&nbsp;		return candidates == null ? null :</b>
+<b class="fc">&nbsp;				candidates.size() == 1 ? candidates.get(0) : null;</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	@Override
+&nbsp;	public List&lt;Client&gt; getClientByContract(Contract.ContractStatus status, Date start, Date finish, Boolean test_drive) {
+<b class="fc">&nbsp;		try (Session session = sessionFactory.openSession()) {</b>
+<b class="fc">&nbsp;			CriteriaBuilder cb = session.getCriteriaBuilder();</b>
+<b class="fc">&nbsp;			CriteriaQuery&lt;Contract&gt; criteria = cb.createQuery(Contract.class);</b>
+<b class="fc">&nbsp;			Root&lt;Contract&gt; root = criteria.from(Contract.class);</b>
+<b class="fc">&nbsp;			criteria.select(root);</b>
+&nbsp;
+<b class="fc">&nbsp;			List&lt;Predicate&gt; predicates = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;			if (status != null)</b>
+<b class="fc">&nbsp;				predicates.add(cb.equal(root.get(&quot;status&quot;), status));</b>
+<b class="fc">&nbsp;			if (start != null)</b>
+<b class="fc">&nbsp;				predicates.add(cb.greaterThanOrEqualTo(root.get(&quot;date&quot;), start));</b>
+<b class="fc">&nbsp;			if (finish != null)</b>
+<b class="fc">&nbsp;				predicates.add(cb.lessThanOrEqualTo(root.get(&quot;date&quot;), finish));</b>
+<b class="fc">&nbsp;			if (test_drive != null)</b>
+<b class="fc">&nbsp;				predicates.add(cb.equal(root.get(&quot;test_drive&quot;), test_drive));</b>
+<b class="fc">&nbsp;			Predicate predicate = cb.and(predicates.toArray(Predicate[]::new));</b>
+<b class="fc">&nbsp;			criteria.where(predicate);</b>
+<b class="fc">&nbsp;			List&lt;Contract&gt; contracts = session.createQuery(criteria).getResultList();</b>
+<b class="fc">&nbsp;			return contracts</b>
+<b class="fc">&nbsp;					.stream()</b>
+<b class="fc">&nbsp;					.map(Contract::getClient)</b>
+<b class="fc">&nbsp;					.distinct()</b>
+<b class="fc">&nbsp;					.collect(Collectors.toList());</b>
+<b class="fc">&nbsp;		}</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	private Object likeExpr(String string) {
+<b class="fc">&nbsp;		return &quot;%&quot; + string + &quot;%&quot;;</b>
+&nbsp;	}
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2022-09-18 04:40</div>
+</div>
+</body>
+</html>
