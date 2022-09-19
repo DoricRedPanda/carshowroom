@@ -62,7 +62,7 @@ class ContractDAOTest {
         clients.add(new Client(null,"Linus Torvalds", "USA", null, null));
         clients.add(new Client(null,"Andrey Stolyarov", "Russia, Moscow", null, null));
         clients.add(new Client(null,"Andrey Stolyarov", "Russia", null, null));
-        clientDAO.saveCollection(clients);
+        clientDAO.insertCollection(clients);
 
         Collection<AutoModel> autoModels = new ArrayList<>();
         autoModels.add(new AutoModel("Maxima", "Nissan"));
@@ -70,7 +70,7 @@ class ContractDAOTest {
         autoModels.add(new AutoModel("Rio", "Kia"));
         autoModels.add(new AutoModel("Optima", "Kia"));
         autoModels.add(new AutoModel("Forte", "Kia"));
-        autoModelDAO.saveCollection(autoModels);
+        autoModelDAO.insertCollection(autoModels);
 
         Collection<Car> cars = new ArrayList<>();
         cars.add(new Car(
@@ -105,7 +105,7 @@ class ContractDAOTest {
                 "blue",
                 "high"
         ));
-        carDAO.saveCollection(cars);
+        carDAO.insertCollection(cars);
 
         Collection<Contract> contracts = new ArrayList<>();
         contracts.add(new Contract(
@@ -136,7 +136,7 @@ class ContractDAOTest {
                 true,
                 Contract.ContractStatus.DONE
         ));
-        contractDAO.saveCollection(contracts);
+        contractDAO.insertCollection(contracts);
 
     }
 

@@ -46,7 +46,7 @@ class BaseDAOTest {
         initialModels.add(new Client(null,"Linus Torvalds", "USA", null, null));
         initialModels.add(new Client(null,"Andrey Stolyarov", "Russia, Moscow", null, null));
         initialModels.add(new Client(null,"Andrey Stolyarov", "Russia", null, null));
-        clientDAO.saveCollection(initialModels);
+        clientDAO.insertCollection(initialModels);
     }
 
     @AfterEach
@@ -60,7 +60,7 @@ class BaseDAOTest {
 
     @Test
     void save() {
-        clientDAO.save(new Client(1234L, "TEST", "test space", "+88888", "test@test.test"));
+        clientDAO.insert(new Client(1234L, "TEST", "test space", "+88888", "test@test.test"));
         assertEquals(7, clientDAO.getAll().size());
         assertEquals("TEST", clientDAO.getSingleClientByName("TEST").getName());
         assertEquals("test space", clientDAO.getSingleClientByName("TEST").getAddress());

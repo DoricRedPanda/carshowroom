@@ -52,7 +52,7 @@ class CarDAOTest {
         autoModels.add(new AutoModel("Rio", "Kia"));
         autoModels.add(new AutoModel("Optima", "Kia"));
         autoModels.add(new AutoModel("Forte", "Kia"));
-        autoModelDAO.saveCollection(autoModels);
+        autoModelDAO.insertCollection(autoModels);
 
         Collection<Car> cars = new ArrayList<>();
         cars.add(new Car(
@@ -87,7 +87,7 @@ class CarDAOTest {
                 "blue",
                 "high"
         ));
-        carDAO.saveCollection(cars);
+        carDAO.insertCollection(cars);
     }
 
     @Test

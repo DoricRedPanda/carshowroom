@@ -61,7 +61,7 @@ public class AutoModelDAOTest {
         autoModels.add(new AutoModel("Rio", "Kia"));
         autoModels.add(new AutoModel("Optima", "Kia"));
         autoModels.add(new AutoModel("Forte", "Kia"));
-        autoModelDAO.saveCollection(autoModels);
+        autoModelDAO.insertCollection(autoModels);
     }
 
 

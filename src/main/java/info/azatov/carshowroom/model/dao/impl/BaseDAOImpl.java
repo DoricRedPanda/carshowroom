@@ -44,7 +44,7 @@ public abstract class BaseDAOImpl<T extends BaseEntity<ID>, ID extends Number> i
     }
 
     @Override
-    public void save(T entity) {
+    public void insert(T entity) {
         try (Session session = sessionFactory.openSession()) {
             if (entity.getId() != null) {
                 entity.setId(null);
@@ -56,11 +56,11 @@ public abstract class BaseDAOImpl<T extends BaseEntity<ID>, ID extends Number> i
     }
 
     @Override
-    public void saveCollection(Collection<T> entities) {
+    public void insertCollection(Collection<T> entities) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             for (T entity : entities) {
-                this.save(entity);
+                this.insert(entity);
             }
             session.getTransaction().commit();
         }

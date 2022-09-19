@@ -18,9 +18,9 @@ public interface BaseDAO<T extends BaseEntity<ID>, ID extends Serializable> {
     Collection<T> getAll();
 
     /** Создает новую запись, соответствующую объекту object */
-    void save(T entity);
+    void insert(T entity);
 
-    void saveCollection(Collection<T> entities);
+    void insertCollection(Collection<T> entities);
 
     /** Удаляет запись об объект из базы данных */
     void delete(T entity);

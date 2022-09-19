@@ -44,5 +44,10 @@ public class AutoModel implements BaseEntity<Long> {
     public int hashCode() {
         return getClass().hashCode();
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s %s (%d)", this.make, this.name, this.year);
+    }
 }
 
