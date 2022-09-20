@@ -47,7 +47,7 @@ class CarDAOTest {
         session.getTransaction().commit();
 
         Collection<AutoModel> autoModels = new ArrayList<>();
-        autoModels.add(new AutoModel("Maxima", "Nissan"));
+        autoModels.add(new AutoModel(null, "Maxima", "Nissan", 2011));
         autoModels.add(new AutoModel("Qashqai", "Nissan"));
         autoModels.add(new AutoModel("Rio", "Kia"));
         autoModels.add(new AutoModel("Optima", "Kia"));
@@ -92,33 +92,65 @@ class CarDAOTest {
 
     @Test
     void search1() {
-        List<Car> res = carDAO.search(null, null,null,"Maxima",null);
+        List<Car> res = carDAO.search(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                "Maxima",
+                "Nissan",
+                2011
+        );
         assertEquals(1, res.size());
     }
     @Test
     void search2() {
-        List<Car> res = carDAO.search(null, 100000.0,400000.0,null,"Nissan");
+        List<Car> res = carDAO.search(
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			null,
+			100000.0,
+			400000.0,
+                null,
+                null,
+			null
+	);
         assertEquals(2, res.size());
     }
     @Test
     void search3() {
-        Car filter = new Car(
-                null,
-                autoModelDAO.getById(1L),
+        List<Car> res = carDAO.search(
                 "qwerty",
-                300000.0,
-                0.0,
                 Date.valueOf("2010-01-01"),
-                1000,
+                100,
                 100.0,
-                198.0,
+                150.0,
                 4,
                 "AT",
                 "radio",
                 "black",
-                "high"
+                "high",
+                null,
+                null,
+                null,
+                null,
+                null
         );
-        List<Car> res = carDAO.search(filter, null,null,null,null);
         assertEquals(1, res.size());
     }
 
