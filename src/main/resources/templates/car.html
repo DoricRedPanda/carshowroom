@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Автомобиль</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style>
+        .indent {
+            margin-left: 30px;
+            margin-right: 30px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="general :: page-header"></div>
+<div class="indent">
+    <div>
+        <h4 th:text="${car.getId()}"></h4>
+        <form method="post" action="/updateCar">
+            <input type="hidden" name = "vin" th:value="${car.getId()}">
+
+	    <label for="carModel">Модель</label>
+            <input type="text" id="carModel" name="carModel" th:value="${car.getModel().getName()}"><br><br>
+<label for="registration_plate">Регистрационный номер</label>
+<input type="text" id="registration_plate" name="registration_plate"
+th:value="${car.getRegistration_plate()}"><br><br>
+
+<label for="price">Цена</label>
+<input type="number" id="price" name="price" th:value="${car.getPrice()}"><br><br>
+
+<label for="kilometers">Пробег (км)</label>
+<input type="number" id="kilometers" name="kilometers"
+th:value="${car.getKilometers()}"><br><br>
+
+<label for="service_date">Дата последнего сервисного обслуживания</label>
+<input type="date" id="service_date" name="service_date"
+th:value="${car.getService_date()}"><br><br>
+
+<label for="displacement">Литраж (см^3)</label>
+<input type="number" id="displacement" name="displacement"
+th:value="${car.getDisplacement()}"><br><br>
+
+<label for="power">Мощность двигателя (kW)</label>
+<input type="number" id="power" name="power" th:value="${car.getPower()}"><br><br>
+
+<label for="top_speed">Максимальная скорость (км/ч)</label>
+<input type="number" id="top_speed" name="top_speed"
+th:value="${car.getTop_speed()}"><br><br>
+
+<label for="seat_count">Число сидений</label>
+<input type="number" id="seat_count" name="seat_count"
+th:value="${car.getSeat_count()}"><br><br>
+
+<label for="transmission_type">Тип коробки передач</label>
+<input type="text" id="transmission_type" name="transmission_type"
+th:value="${car.getTransmission_type()}"><br><br>
+
+<label for="devices">Усртойства</label>
+<input type="text" id="devices" name="devices" th:value="${car.getDevices()}"><br><br>
+
+<label for="color">Цвет</label>
+<input type="text" id="color" name="color" th:value="${car.getColor()}"><br><br>
+
+<label for="saloon">Качество обивки салона</label>
+<input type="text" id="saloon" name="saloon" th:value="${car.getSaloon()}"><br><br>
+
+            <input id="submitButton" type="submit" value="Сохранить">
+        </form>
+    </div>
+</div>
+</body>
+</html>

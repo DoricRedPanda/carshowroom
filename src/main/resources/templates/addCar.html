@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Добавить автомобиль</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style>
+        .indent {
+            margin-left: 30px;
+            margin-right: 30px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="general :: page-header"></div>
+<div class="indent">
+    <form method="post" action="/insertCar">
+        <label for="model_name">Модель</label>
+        <input type="text" id="model_name" name="model_name"><br><br>
+
+<label for="registration_plate">Регистрационный номер</label>
+<input type="text" id="registration_plate" name="registration_plate"><br><br>
+
+<label for="price">Цена</label>
+<input type="number" id="price" name="price"><br><br>
+
+<label for="kilometers">Пробег (км)</label>
+<input type="number" id="kilometers" name="kilometers"><br><br>
+
+<label for="service_date">Дата последнего сервисного обслуживания</label>
+<input type="date" id="service_date" name="service_date"><br><br>
+
+<label for="displacement">Литраж</label>
+<input type="number" id="displacement" name="displacement"><br><br>
+
+<label for="power">Мощность двигателя</label>
+<input type="number" id="power" name="power"><br><br>
+
+<label for="top_speed">Максимальная скорость</label>
+<input type="number" id="top_speed" name="top_speed"><br><br>
+
+<label for="seat_count">Число сидений</label>
+<input type="number" id="seat_count" name="seat_count"><br><br>
+
+<label for="transmission_type">Тип коробки передач</label>
+<input type="text" id="transmission_type" name="transmission_type"><br><br>
+
+<label for="devices">Усртойства</label>
+<input type="text" id="devices" name="devices"><br><br>
+
+<label for="color">Цвет</label>
+<input type="text" id="color" name="color"><br><br>
+
+<label for="saloon">Качество обивки салона</label>
+<input type="text" id="saloon" name="saloon"><br><br>
+
+
+        <input id="submitButton" type="submit" value="Сохранить">
+    </form>
+</div>
+</body>

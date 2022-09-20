@@ -11,5 +11,5 @@ public interface ClientDAO extends BaseDAO<Client, Long> {
     List<Client> getAllClientByName(String clientName);
     Client getSingleClientByName(String clientName);
 
-    List<Client> getClientByContract(Contract.ContractStatus status, Date start, Date finish, Boolean test_drive);
+    List<Client> getClientByContract(Long vin, Contract.ContractStatus status, Date start, Date finish, Boolean test_drive);
 }

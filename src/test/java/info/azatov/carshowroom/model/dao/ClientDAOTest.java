@@ -164,13 +164,13 @@ class ClientDAOTest {
 
     @Test
     void getClientByContract() {
-        List<Client> res = clientDAO.getClientByContract(Contract.ContractStatus.DONE, null, null, true);
+        List<Client> res = clientDAO.getClientByContract(null, Contract.ContractStatus.DONE, null, null, true);
         assertEquals(2, res.size());
     }
 
     @Test
     void getClientByContract2() {
-        List<Client> res = clientDAO.getClientByContract(null, Date.valueOf("2021-01-01"), Date.valueOf("2021-02-02"), null);
+        List<Client> res = clientDAO.getClientByContract(null, null, Date.valueOf("2021-01-01"), Date.valueOf("2021-02-02"), null);
         assertEquals(3, res.size());
     }
 }

@@ -41,7 +41,7 @@ public class ClientDAOImpl extends BaseDAOImpl<Client, Long> implements ClientDA
 	}
 
 	@Override
-	public List<Client> getClientByContract(Contract.ContractStatus status, Date start, Date finish, Boolean test_drive) {
+	public List<Client> getClientByContract(Long vin, Contract.ContractStatus status, Date start, Date finish, Boolean test_drive) {
 		try (Session session = sessionFactory.openSession()) {
 			CriteriaBuilder cb = session.getCriteriaBuilder();
 			CriteriaQuery<Contract> criteria = cb.createQuery(Contract.class);
@@ -49,6 +49,8 @@ public class ClientDAOImpl extends BaseDAOImpl<Client, Long> implements ClientDA
 			criteria.select(root);
 
 			List<Predicate> predicates = new ArrayList<>();
+			if (vin != null)
+				predicates.add(cb.equal(root.get("car").get("id"), vin));
 			if (status != null)
 				predicates.add(cb.equal(root.get("status"), status));
 			if (start != null)

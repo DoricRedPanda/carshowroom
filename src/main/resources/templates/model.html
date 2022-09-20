@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <title>Клиент</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <style>
+    .indent {
+      margin-left: 30px;
+      margin-right: 30px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+<div th:replace="general :: page-header"></div>
+<div class="indent">
+  <div>
+    <h4 th:text="${model.getId()}"></h4>
+    <form method="post" action="/updateModel">
+      <input type="hidden" name = "model_id" th:value="${model.getId()}">
+      <label for="name">Модель</label>
+      <input type="text" id="name" name="name" th:value="${model.getName()}"><br><br>
+      <label for="make">Производитель</label>
+      <input type="text" id="make" name="make" th:value="${model.getMake()}"><br><br>
+      <label for="year">Год производства</label>
+      <input type="text" id="year" name="year" th:value="${model.getYear()}"><br><br>
+      <input id="submitButton" type="submit" value="Сохранить">
+    </form>
+  </div>
+</div>
+</body>
