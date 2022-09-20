@@ -119,12 +119,15 @@ public class ClientController {
 
             return "redirect:/client?client_id=" + clients.iterator().next().getId();
         }
-        if (clients.size() < 1)
-            return "error";
+        if (clients.size() < 1) {
+            model.addAttribute(
+                    "error_message", "Не нашлось клиентов, удовлетворяющих запросу.");
+            return "errorPage";
+        }
         model.addAttribute("clients", clients);
         model.addAttribute("clientDAO", clientDAO);
         model.addAttribute("contractDAO", contractDAO);
-        return "searchClient";
+        return "clients";
     }
 
     @PostMapping("/deleteContract")
