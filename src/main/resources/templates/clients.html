@@ -15,8 +15,8 @@
 </head>
 <body>
 <div th:replace="general :: page-header"></div>
-<h1>Клиенты</h1>
 <div class="indent">
+  <h1>Клиенты</h1>
   <table class="table table-bordered table-warning">
     <thead>
     <tr>
@@ -26,6 +26,7 @@
       <th scope="col">Телефон</th>
       <th scope="col">Эл. Почта</th>
       <th scope="col">Заказы</th>
+      <th scope="col"></th>
       <th scope="col"></th>
     </tr>
     </thead>
@@ -81,6 +82,11 @@
             </tbody>
           </table>
         </details>
+      </td>
+      <td>
+        <a th:href="'/client?client_id=' + ${client.getId()}">
+          <span th:text="Подробнее"></span>
+        </a>
       </td>
       <td>
         <form method="post" action="/deleteClient">

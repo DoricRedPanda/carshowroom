@@ -22,8 +22,10 @@
     <tr>
       <th scope="col">Номер</th>
       <th scope="col">Модель</th>
+      <th scope="col">Регистрационный номер</th>
       <th scope="col">Цвет</th>
       <th scope="col">Цена</th>
+      <th scope="col"></th>
       <th scope="col"></th>
     </tr>
     </thead>
@@ -41,10 +43,18 @@
         <span th:text="${car.getModel().toString()}"></span>
       </td>
       <td>
+        <span th:text="${car.getRegistration_plate()}"></span>
+      </td>
+      <td>
         <span th:text="${car.getColor()}"></span>
       </td>
       <td>
         <span th:text="${car.getPrice()}"></span>
+      </td>
+      <td>
+        <a th:href="'/car?vin=' + ${car.getId()}">
+          <span th:text="Подробнее"></span>
+        </a>
       </td>
       <td>
         <form method="post" action="/deleteCar">

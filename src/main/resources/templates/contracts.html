@@ -16,6 +16,7 @@
 <body>
 <div th:replace="general :: page-header"></div>
 <div class="indent">
+  <h1>Заказы</h1>
   <table class="table table-bordered table-warning">
     <thead>
     <tr>
@@ -25,6 +26,8 @@
       <th scope="col">Дата заказа</th>
       <th scope="col">Тест драйв</th>
       <th scope="col">Статус</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
     </tr>
     </thead>
     <tbody>
@@ -55,6 +58,11 @@
       </td>
       <td>
         <span th:text="${contract.getStatus()}"></span>
+      </td>
+      <td>
+        <a th:href="'/contract?contract_id=' + ${contract.getId()}">
+          <span th:text="Подробнее"></span>
+        </a>
       </td>
       <td>
         <form method="post" action="/deleteContract">
