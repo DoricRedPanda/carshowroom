@@ -4,25 +4,33 @@
 caption Схема навигации
 scale 2.0
 component [Главная страница] as mainPage
-component [Автомобили] as automobiles
-component [Автомобиль] as automobile
-component [Марки] as marques
-component [Марка] as marque
+component [Автомобили] as cars
+component [Автомобиль] as car
+component [Добавить автомобиль] as addCar
+component [Марки] as automodels
+component [Марка] as automodel
+component [Добавить марку] as addAutomodel
 component [Клиенты] as clients
 component [Клиент] as client
-component [Заказы] as orders
-component [Заказ] as order
+component [Добавить клиентa] as addClient
+component [Заказы] as contracts
+component [Заказ] as contract
+component [Добавить заказ] as addContract
 
 
-mainPage -d-> automobiles: Список автомобилей
+mainPage -d-> cars: Список автомобилей
 mainPage -d-> clients : Список клиентов
-mainPage -d-> orders : Список заказов
-mainPage -d-> marques : Список марок
+mainPage -d-> contracts : Список заказов
+mainPage -d-> automodels : Список марок
 
-marques -d-> marque : Конкретная марка
-automobiles -d-> automobile: Конкретный автомобиль
+automodels -d-> automodel : Конкретная марка
+cars -d-> car: Конкретный автомобиль
 clients -d-> client : Конкретный клиент
-orders -d-> order : Конкретный заказ
+contracts -d-> contract : Конкретный заказ
 
+automodels -d-> addAutomodel : Добавить марку
+cars -d-> addCar: Добавить автомобиль
+clients -d-> addClient : Добавить клиента
+contracts -d-> addContract : Добавить заказ
 @enduml
 
