@@ -6,6 +6,8 @@ import info.azatov.carshowroom.model.dao.impl.AutoModelDAOImpl;
 import info.azatov.carshowroom.model.dao.impl.CarDAOImpl;
 import info.azatov.carshowroom.model.entity.AutoModel;
 import info.azatov.carshowroom.model.entity.Car;
+import info.azatov.carshowroom.model.entity.Client;
+import info.azatov.carshowroom.model.entity.Contract;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.Date;
+import java.util.Collection;
 import java.util.List;
 
 @Controller
@@ -129,6 +132,57 @@ public class CarController {
             car.setSaloon(saloon);
         carDAO.update(car);
         return String.format("redirect:/car?vin=%d", vin);
+    }
+
+    @GetMapping("/searchCar")
+    public String searchCar(
+            @RequestParam(name = "registration_plate") String registration_plate,
+            @RequestParam(name = "startPrice") Double startPrice,
+            @RequestParam(name = "finishPrice") Double finishPrice,
+            @RequestParam(name = "service_date") Date service_date,
+            @RequestParam(name = "displacement") Integer displacement,
+            @RequestParam(name = "power") Double power,
+            @RequestParam(name = "top_speed") Double top_speed,
+            @RequestParam(name = "seat_count") Integer seat_count,
+            @RequestParam(name = "transmission_type") String transmission_type,
+            @RequestParam(name = "devices") String devices,
+            @RequestParam(name = "color") String color,
+            @RequestParam(name = "saloon") String saloon,
+            @RequestParam(name = "name") String name,
+            @RequestParam(name = "make") String make,
+            @RequestParam(name = "year") Integer year,
+
+            Model model
+    ) {
+        Collection<Car> cars = carDAO.search(
+                registration_plate,
+                service_date,
+                displacement,
+                power,
+                top_speed,
+                seat_count,
+                transmission_type,
+                devices,
+                color,
+                saloon,
+                startPrice,
+                finishPrice,
+                name,
+                make,
+                year
+                );
+        if (cars.size() == 1) {
+            return "redirect:/car?vin=" + cars.iterator().next().getId();
+        }
+        if (cars.size() < 1) {
+            model.addAttribute(
+                    "error_message", "Не нашлось автомобилей, удовлетворяющих запросу.");
+            return "errorPage";
+        }
+        model.addAttribute("cars", cars);
+        model.addAttribute("carDAO", carDAO);
+        model.addAttribute("modelDAO", modelDAO);
+        return "cars";
     }
 
     @PostMapping("/deleteCar")

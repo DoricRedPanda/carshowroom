@@ -34,7 +34,14 @@
             <br><br>
 
             <label for="status">Статус заказа</label>
-            <input type="text" id="status" name="status" th:value="${contract.getStatus()}">
+            <p type="text" th:text="${contract.getStatus()}"></p>
+            <select name="status" id="status">
+                <option value="PROCESSING">В обработке</option>
+                <option value="WAITING4DELIVERY">Ожидание поставки</option>
+                <option value="IN_SALOON">Есть в салоне</option>
+                <option value="IN_TEST_DRIVE">В тест-драйве</option>
+                <option value="DONE">Выполнен</option>
+            </select>
             <br><br>
 
             <input id="submitButton" type="submit" value="Сохранить">

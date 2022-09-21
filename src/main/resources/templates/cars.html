@@ -16,6 +16,7 @@
 <body>
 <div th:replace="general :: page-header"></div>
 <div class="indent">
+  <h1>Автомобили</h1>
   <table class="table table-bordered table-warning">
     <thead>
     <tr>
@@ -57,6 +58,55 @@
   <a id="addCarButton" href="/addCar">
     <p>Добавить автомобиль</p>
   </a>
+  <h1>Поиск автомобиля по указанным характеристикам</h1>
+  <form method="get" action="/searchCar">
+    <label for="name">Модель</label>
+    <input type="text" id="name" name="name"><br><br>
+
+    <label for="make">Производитель</label>
+    <input type="text" id="make" name="make"><br><br>
+
+    <label for="year">Год выпуска</label>
+    <input type="text" id="year" name="year"><br><br>
+
+    <label for="registration_plate">Регистрационный номер</label>
+    <input type="text" id="registration_plate" name="registration_plate"><br><br>
+
+    <label for="startPrice">Цена (от)</label>
+    <input type="number" id="startPrice" name="startPrice"><br><br>
+
+    <label for="finishPrice">Цена (до)</label>
+    <input type="number" id="finishPrice" name="finishPrice"><br><br>
+
+    <label for="service_date">Последнее тех обслуживание не позднее</label>
+    <input type="date" id="service_date" name="service_date" value="1970-01-01"><br><br>
+
+    <label for="displacement">Минимальный литраж</label>
+    <input type="number" id="displacement" name="displacement"><br><br>
+
+    <label for="power">Мощность двигателя больше</label>
+    <input type="number" id="power" name="power"><br><br>
+
+    <label for="top_speed">Максимальная скорость больше</label>
+    <input type="number" id="top_speed" name="top_speed"><br><br>
+
+    <label for="seat_count">Число сидений</label>
+    <input type="number" id="seat_count" name="seat_count"><br><br>
+
+    <label for="transmission_type">Тип коробки передач</label>
+    <input type="text" id="transmission_type" name="transmission_type"><br><br>
+
+    <label for="devices">Усртойства</label>
+    <input type="text" id="devices" name="devices"><br><br>
+
+    <label for="color">Цвет</label>
+    <input type="text" id="color" name="color"><br><br>
+
+    <label for="saloon">Качество обивки салона</label>
+    <input type="text" id="saloon" name="saloon"><br><br>
+
+    <button id="searchClientButton" type="submit">Поиск</button>
+  </form>
 </div>
 </body>
 </html>
