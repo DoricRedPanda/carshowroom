@@ -17,8 +17,8 @@ component [Заказ] as order
 mainPage -d-> automobiles: Список автомобилей
 mainPage -d-> clients : Список клиентов
 mainPage -d-> orders : Список заказов
+mainPage -d-> marques : Список марок
 
-automobiles -d-> marques : Список марок
 marques -d-> marque : Конкретная марка
 automobiles -d-> automobile: Конкретный автомобиль
 clients -d-> client : Конкретный клиент
