@@ -21,8 +21,9 @@
         <form method="post" action="/updateCar">
             <input type="hidden" name = "vin" th:value="${car.getId()}">
 
-	    <label for="carModel">Модель</label>
+            <label for="carModel">Модель</label>
             <input type="text" id="carModel" name="carModel" th:value="${car.getModel().getName()}"><br><br>
+
 <label for="registration_plate">Регистрационный номер</label>
 <input type="text" id="registration_plate" name="registration_plate"
 th:value="${car.getRegistration_plate()}"><br><br>
@@ -67,6 +68,10 @@ th:value="${car.getTransmission_type()}"><br><br>
 <input type="text" id="saloon" name="saloon" th:value="${car.getSaloon()}"><br><br>
 
             <input id="submitButton" type="submit" value="Сохранить">
+        </form>
+        <form method="post" action="/deleteCar">
+            <input type="hidden" name="vin" th:value="${car.getId()}">
+            <button id="deleteCarButton" type="submit" class="deleteCarButton">Удалить</button>
         </form>
     </div>
 </div>

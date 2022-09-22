@@ -59,15 +59,13 @@
       <td>
         <form method="post" action="/deleteCar">
           <input type="hidden" name="vin" th:value="${car.getId()}">
-          <button id="deleteButton" type="submit" class="deleteCarButton">Удалить</button>
+          <button id="deleteCarButton" type="submit" class="deleteCarButton">Удалить</button>
         </form>
       </td>
     </tr>
     </tbody>
   </table>
-  <a id="addCarButton" href="/addCar">
-    <p>Добавить автомобиль</p>
-  </a>
+  <a id="addCarButton" href="/addCar">Добавить автомобиль</a>
   <h1>Поиск автомобиля по указанным характеристикам</h1>
   <form method="get" action="/searchCar">
     <label for="name">Модель</label>

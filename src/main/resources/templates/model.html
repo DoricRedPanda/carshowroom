@@ -28,6 +28,10 @@
       <input type="text" id="year" name="year" th:value="${model.getYear()}"><br><br>
       <input id="submitButton" type="submit" value="Сохранить">
     </form>
+    <form method="post" action="/deleteModel">
+      <input type="hidden" name="model_id" th:value="${model.getId()}">
+      <button id="deleteButton" type="submit" class="deleteModelButton">Удалить</button>
+    </form>
   </div>
 </div>
 </body>

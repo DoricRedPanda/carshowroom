@@ -2,8 +2,6 @@
 <html  xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
   <title>Клиенты</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <style>
     .indent {
@@ -73,10 +71,9 @@
                 </a>
               </td>
               <td>
-                <form method="post" action="/deleteContract">
-                  <input type="hidden" name="contract_id" th:value="${contract.getId()}">
-                  <button id="deleteContractButton" type="submit">Удалить</button>
-                </form>
+                <a th:href="'/car?vin=' + ${contract.getCar().getId()}">
+                  <span th:text="${contract.getCar().toString()}"></span>
+                </a>
               </td>
             </tr>
             </tbody>
@@ -91,15 +88,13 @@
       <td>
         <form method="post" action="/deleteClient">
           <input type="hidden" name="client_id" th:value="${client.getId()}">
-          <button id="deleteButton" type="submit" class="deleteClientButton">Удалить</button>
+          <button id="deleteClientButton" type="submit" class="deleteClientButton">Удалить</button>
         </form>
       </td>
     </tr>
     </tbody>
   </table>
-  <a id="addClientButton" href="/addClient">
-    <p>Добавить</p>
-  </a>
+  <a id="addClientButton" href="/addClient">Добавить</a>
   <h1>Поиск клиентов по характеристикам заказов</h1>
   <form method="get" action="/searchClient">
     <label for="vin">Номер автомобиля</label>

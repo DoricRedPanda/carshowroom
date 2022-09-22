@@ -55,16 +55,14 @@
       <td>
         <form method="post" action="/deleteModel">
           <input type="hidden" name="model_id" th:value="${model.getId()}">
-          <button id="deleteButton" type="submit" class="deleteModelButton">Удалить</button>
+          <button id="deleteModelButton" type="submit" class="deleteModelButton">Удалить</button>
         </form>
 
       </td>
     </tr>
     </tbody>
   </table>
-  <a id="addModelButton" href="/addModel">
-    <p>Добавить марку</p>
-  </a>
+  <a id="addModelButton" href="/addModel">Добавить марку</a>
 </div>
 </body>
 </html>

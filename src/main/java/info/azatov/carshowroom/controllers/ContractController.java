@@ -131,6 +131,20 @@ public class ContractController {
                 status
         );
         contractDAO.insert(contract);
-        return "redirect:/clients";
+        return "redirect:/contracts";
     }
+
+    @PostMapping("/deleteContract")
+    public String deleteContract(@RequestParam(name = "contract_id") Long contract_id, Model model) {
+        Contract contract = contractDAO.getById(contract_id);
+        if (contract == null) {
+            model.addAttribute(
+                    "error_message",
+                    String.format("Заказ с номером %d не зарегистрирован.", contract_id));
+            return "errorPage";
+        }
+        contractDAO.delete(contract);
+        return "redirect:/contracts";
+    }
+
 }

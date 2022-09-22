@@ -30,6 +30,10 @@
       <input type="text" id="client_email" name="client_email" th:value="${client.getEmail()}"><br><br>
       <input id="submitButton" type="submit" value="Сохранить">
     </form>
+    <form method="post" action="/deleteClient">
+      <input type="hidden" name="client_id" th:value="${client.getId()}">
+      <button id="deleteButton" type="submit" class="deleteClientButton">Удалить</button>
+    </form>
   </div>
 </div>
 </body>

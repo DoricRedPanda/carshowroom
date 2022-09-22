@@ -67,15 +67,13 @@
       <td>
         <form method="post" action="/deleteContract">
           <input type="hidden" name="contract_id" th:value="${contract.getId()}">
-          <button id="deleteButton" type="submit" class="deleteContractButton">Удалить</button>
+          <button id="deleteContractButton" type="submit" class="deleteContractButton">Удалить</button>
         </form>
       </td>
     </tr>
     </tbody>
   </table>
-  <a id="addContractButton" href="/addContract">
-    <p>Оформить заказ</p>
-  </a>
+  <a id="addContractButton" href="/addContract">Оформить заказ</a>
 </div>
 </body>
 </html>

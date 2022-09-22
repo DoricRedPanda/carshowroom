@@ -46,6 +46,10 @@
 
             <input id="submitButton" type="submit" value="Сохранить">
         </form>
+        <form method="post" action="/deleteContract">
+            <input type="hidden" name="contract_id" th:value="${contract.getId()}">
+            <button id="deleteButton" type="submit" class="deleteContractButton">Удалить</button>
+        </form>
     </div>
 </div>
 </body>
