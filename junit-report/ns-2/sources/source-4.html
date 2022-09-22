@@ -1,0 +1,253 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ContractController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">info.azatov.carshowroom.controllers</a>
+</div>
+
+<h1>Coverage Summary for Class: ContractController (info.azatov.carshowroom.controllers)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ContractController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    14.3%
+  </span>
+  <span class="absValue">
+    (1/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    6.3%
+  </span>
+  <span class="absValue">
+    (4/63)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package info.azatov.carshowroom.controllers;
+&nbsp;
+&nbsp;import info.azatov.carshowroom.model.dao.CarDAO;
+&nbsp;import info.azatov.carshowroom.model.dao.ClientDAO;
+&nbsp;import info.azatov.carshowroom.model.dao.ContractDAO;
+&nbsp;import info.azatov.carshowroom.model.dao.impl.CarDAOImpl;
+&nbsp;import info.azatov.carshowroom.model.dao.impl.ClientDAOImpl;
+&nbsp;import info.azatov.carshowroom.model.dao.impl.ContractDAOImpl;
+&nbsp;import info.azatov.carshowroom.model.entity.Car;
+&nbsp;import info.azatov.carshowroom.model.entity.Client;
+&nbsp;import info.azatov.carshowroom.model.entity.Contract;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.stereotype.Controller;
+&nbsp;import org.springframework.ui.Model;
+&nbsp;import org.springframework.web.bind.annotation.GetMapping;
+&nbsp;import org.springframework.web.bind.annotation.ModelAttribute;
+&nbsp;import org.springframework.web.bind.annotation.PostMapping;
+&nbsp;import org.springframework.web.bind.annotation.RequestParam;
+&nbsp;
+&nbsp;import java.sql.Date;
+&nbsp;import java.util.Collection;
+&nbsp;
+&nbsp;@Controller
+<b class="fc">&nbsp;public class ContractController {</b>
+&nbsp;
+<b class="fc">&nbsp;    @Autowired</b>
+&nbsp;    private final ContractDAO contractDAO = new ContractDAOImpl();
+<b class="fc">&nbsp;    @Autowired</b>
+&nbsp;    private final ClientDAO clientDAO = new ClientDAOImpl();
+<b class="fc">&nbsp;    @Autowired</b>
+&nbsp;    private final CarDAO carDAO = new CarDAOImpl();
+&nbsp;
+&nbsp;    @GetMapping(&quot;/contracts&quot;)
+&nbsp;    public String contractsListPage(Model model) {
+<b class="nc">&nbsp;        Collection&lt;Contract&gt; contracts = contractDAO.getAll();</b>
+<b class="nc">&nbsp;        model.addAttribute(&quot;contracts&quot;, contracts);</b>
+<b class="nc">&nbsp;        return &quot;contracts&quot;;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(&quot;/contract&quot;)
+&nbsp;    public String contractPage(@RequestParam(name = &quot;contract_id&quot;) Long contract_id, Model model) {
+<b class="nc">&nbsp;        Contract contract = contractDAO.getById(contract_id);</b>
+<b class="nc">&nbsp;        if (contract == null) {</b>
+<b class="nc">&nbsp;            model.addAttribute(</b>
+&nbsp;                    &quot;error_message&quot;,
+<b class="nc">&nbsp;                    String.format(&quot;Заказ с номером %d не зарегистрирован.&quot;, contract_id));</b>
+<b class="nc">&nbsp;            return &quot;errorPage&quot;;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        model.addAttribute(&quot;contract&quot;, contract);</b>
+<b class="nc">&nbsp;        model.addAttribute(&quot;contractDAO&quot;, contractDAO);</b>
+<b class="nc">&nbsp;        return &quot;contract&quot;;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PostMapping(&quot;/updateContract&quot;)
+&nbsp;    public String updateContract(
+&nbsp;            @RequestParam(name = &quot;contract_id&quot;) Long contract_id,
+&nbsp;            @RequestParam(name = &quot;client_id&quot;) Long client_id,
+&nbsp;            @RequestParam(name = &quot;vin&quot;) Long vin,
+&nbsp;            @RequestParam(name = &quot;date&quot;) Date date,
+&nbsp;            @RequestParam(name = &quot;test_drive&quot;, required = false) Boolean test_drive,
+&nbsp;            @RequestParam(name = &quot;status&quot;) Contract.ContractStatus status,
+&nbsp;            Model model
+&nbsp;    ) {
+<b class="nc">&nbsp;        Contract contract = contractDAO.getById(contract_id);</b>
+<b class="nc">&nbsp;        if (contract == null) {</b>
+<b class="nc">&nbsp;            model.addAttribute(</b>
+&nbsp;                    &quot;error_message&quot;,
+<b class="nc">&nbsp;                    String.format(&quot;Заказ с номером %d не зарегистрирован.&quot;, contract_id));</b>
+<b class="nc">&nbsp;            return &quot;errorPage&quot;;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        if (client_id != null) {</b>
+<b class="nc">&nbsp;            Client client = clientDAO.getById(client_id);</b>
+<b class="nc">&nbsp;            if (client == null) {</b>
+<b class="nc">&nbsp;                model.addAttribute(</b>
+&nbsp;                        &quot;error_message&quot;,
+<b class="nc">&nbsp;                        String.format(&quot;Клиента с номером %d нет в салоне&quot;, client_id));</b>
+<b class="nc">&nbsp;                return &quot;errorPage&quot;;</b>
+&nbsp;            }
+<b class="nc">&nbsp;            contract.setClient(client);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        if (vin != null) {</b>
+<b class="nc">&nbsp;            Car car = carDAO.getById(vin);</b>
+<b class="nc">&nbsp;            if (car == null) {</b>
+<b class="nc">&nbsp;                model.addAttribute(&quot;error_message&quot;, String.format(&quot;Машины с номером %d нет в салоне&quot;, vin));</b>
+<b class="nc">&nbsp;                return &quot;errorPage&quot;;</b>
+&nbsp;            }
+<b class="nc">&nbsp;            contract.setCar(car);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        contract.setDate(date);</b>
+<b class="nc">&nbsp;        contract.setStatus(status);</b>
+<b class="nc">&nbsp;        if (test_drive == null)</b>
+<b class="nc">&nbsp;            test_drive = false;</b>
+<b class="nc">&nbsp;        contract.setTest_drive(test_drive);</b>
+<b class="nc">&nbsp;        contractDAO.update(contract);</b>
+<b class="nc">&nbsp;        return &quot;redirect:/clients&quot;;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(&quot;/addContract&quot;)
+&nbsp;    public String addContractPage(Model model) {
+<b class="nc">&nbsp;        return &quot;addContract&quot;;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PostMapping(&quot;/createContract&quot;)
+&nbsp;    public String createContract(
+&nbsp;            @RequestParam(name = &quot;client_id&quot;) Long client_id,
+&nbsp;            @RequestParam(name = &quot;vin&quot;) Long vin,
+&nbsp;            @RequestParam(name = &quot;date&quot;) Date date,
+&nbsp;            @RequestParam(name = &quot;test_drive&quot;, required = false) Boolean test_drive,
+&nbsp;            @RequestParam(name = &quot;status&quot;) Contract.ContractStatus status,
+&nbsp;            Model model
+&nbsp;    ) {
+<b class="nc">&nbsp;        Client client = clientDAO.getById(client_id);</b>
+<b class="nc">&nbsp;        if (client == null) {</b>
+<b class="nc">&nbsp;            model.addAttribute(</b>
+&nbsp;                    &quot;error_message&quot;,
+<b class="nc">&nbsp;                    String.format(&quot;Клиента с номером %d нет в салоне&quot;, client_id));</b>
+<b class="nc">&nbsp;            return &quot;errorPage&quot;;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        Car car = carDAO.getById(vin);</b>
+<b class="nc">&nbsp;        if (car == null) {</b>
+<b class="nc">&nbsp;            model.addAttribute(&quot;error_message&quot;, String.format(&quot;Машины с номером %d нет в салоне&quot;, vin));</b>
+<b class="nc">&nbsp;            return &quot;errorPage&quot;;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        if (test_drive == null)</b>
+<b class="nc">&nbsp;            test_drive = false;</b>
+<b class="nc">&nbsp;        Contract contract = new Contract(</b>
+&nbsp;                client,
+&nbsp;                car,
+&nbsp;                date,
+<b class="nc">&nbsp;                test_drive,</b>
+&nbsp;                status
+&nbsp;        );
+<b class="nc">&nbsp;        contractDAO.insert(contract);</b>
+<b class="nc">&nbsp;        return &quot;redirect:/contracts&quot;;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PostMapping(&quot;/deleteContract&quot;)
+&nbsp;    public String deleteContract(@RequestParam(name = &quot;contract_id&quot;) Long contract_id, Model model) {
+<b class="nc">&nbsp;        Contract contract = contractDAO.getById(contract_id);</b>
+<b class="nc">&nbsp;        if (contract == null) {</b>
+<b class="nc">&nbsp;            model.addAttribute(</b>
+&nbsp;                    &quot;error_message&quot;,
+<b class="nc">&nbsp;                    String.format(&quot;Заказ с номером %d не зарегистрирован.&quot;, contract_id));</b>
+<b class="nc">&nbsp;            return &quot;errorPage&quot;;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        contractDAO.delete(contract);</b>
+<b class="nc">&nbsp;        return &quot;redirect:/contracts&quot;;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2022-09-22 19:54</div>
+</div>
+</body>
+</html>

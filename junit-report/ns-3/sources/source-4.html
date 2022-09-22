@@ -48,18 +48,18 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    100%
+    97.1%
   </span>
   <span class="absValue">
-    (33/33)
+    (34/35)
   </span>
 </td>
 </tr>
   <tr>
-    <td class="name">ClientDAOImpl$$EnhancerBySpringCGLIB$$d3d19c3e</td>
+    <td class="name">ClientDAOImpl$$EnhancerBySpringCGLIB$$47eebdb1</td>
   </tr>
   <tr>
-    <td class="name">ClientDAOImpl$$EnhancerBySpringCGLIB$$d3d19c3e$$FastClassBySpringCGLIB$$e4a1b3a</td>
+    <td class="name">ClientDAOImpl$$EnhancerBySpringCGLIB$$47eebdb1$$FastClassBySpringCGLIB$$6c4ee9b6</td>
   </tr>
   <tr>
     <td class="name">ClientDAOImpl$$FastClassBySpringCGLIB$$7aca2a17</td>
@@ -76,10 +76,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    100%
+    97.1%
   </span>
   <span class="absValue">
-    (33/33)
+    (34/35)
   </span>
 </td>
 </tr>
@@ -133,7 +133,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;	}
 &nbsp;
 &nbsp;	@Override
-&nbsp;	public List&lt;Client&gt; getClientByContract(Contract.ContractStatus status, Date start, Date finish, Boolean test_drive) {
+&nbsp;	public List&lt;Client&gt; getClientByContract(Long vin, Contract.ContractStatus status, Date start, Date finish, Boolean test_drive) {
 <b class="fc">&nbsp;		try (Session session = sessionFactory.openSession()) {</b>
 <b class="fc">&nbsp;			CriteriaBuilder cb = session.getCriteriaBuilder();</b>
 <b class="fc">&nbsp;			CriteriaQuery&lt;Contract&gt; criteria = cb.createQuery(Contract.class);</b>
@@ -141,6 +141,8 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;			criteria.select(root);</b>
 &nbsp;
 <b class="fc">&nbsp;			List&lt;Predicate&gt; predicates = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;			if (vin != null)</b>
+<b class="nc">&nbsp;				predicates.add(cb.equal(root.get(&quot;car&quot;).get(&quot;id&quot;), vin));</b>
 <b class="fc">&nbsp;			if (status != null)</b>
 <b class="fc">&nbsp;				predicates.add(cb.equal(root.get(&quot;status&quot;), status));</b>
 <b class="fc">&nbsp;			if (start != null)</b>
@@ -189,7 +191,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2022-09-18 15:49</div>
+    <div style="float:right;">generated on 2022-09-22 19:54</div>
 </div>
 </body>
 </html>

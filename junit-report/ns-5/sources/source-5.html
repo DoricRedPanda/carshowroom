@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > BaseDAO</title>
+  <title>Coverage Report > CarDAO</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -21,14 +21,14 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">info.azatov.carshowroom.model.dao</a>
 </div>
 
-<h1>Coverage Summary for Class: BaseDAO (info.azatov.carshowroom.model.dao)</h1>
+<h1>Coverage Summary for Class: CarDAO (info.azatov.carshowroom.model.dao)</h1>
 
 <table class="coverageStats">
 <tr>
   <th class="name">Class</th>
 </tr>
 <tr>
-  <td class="name">BaseDAO</td>
+  <td class="name">CarDAO</td>
 </tr>
 
 </table>
@@ -40,35 +40,30 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <code class="sourceCode" id="sourceCode">&nbsp;package info.azatov.carshowroom.model.dao;
 &nbsp;
-&nbsp;import info.azatov.carshowroom.model.entity.BaseEntity;
+&nbsp;import java.sql.Date;
+&nbsp;import java.util.List;
 &nbsp;
-&nbsp;import java.io.Serializable;
-&nbsp;import java.util.Collection;
+&nbsp;import info.azatov.carshowroom.model.entity.Car;
 &nbsp;
-&nbsp;/**
-&nbsp; * Унифицированный интерфейс управления персистентным состоянием объектов
-&nbsp; * @param &lt;T&gt; тип объекта персистенции
-&nbsp; * @param &lt;ID&gt; тип первичного ключа
-&nbsp; */
-&nbsp;public interface BaseDAO&lt;T extends BaseEntity&lt;ID&gt;, ID extends Serializable&gt; {
-&nbsp;    /** Возвращает объект соответствующий записи с первичным ключом id или null */
-&nbsp;    T getById(ID id);
+&nbsp;public interface CarDAO extends BaseDAO&lt;Car, Long&gt; {
 &nbsp;
-&nbsp;    /** Возвращает список объектов соответствующих всем записям в базе данных */
-&nbsp;    Collection&lt;T&gt; getAll();
-&nbsp;
-&nbsp;    /** Создает новую запись, соответствующую объекту object */
-&nbsp;    void save(T entity);
-&nbsp;
-&nbsp;    void saveCollection(Collection&lt;T&gt; entities);
-&nbsp;
-&nbsp;    /** Удаляет запись об объект из базы данных */
-&nbsp;    void delete(T entity);
-&nbsp;    /** Удаляет запись об объект из базы данных по id */
-&nbsp;    void deleteById(ID id);
-&nbsp;
-&nbsp;    /** Сохраняет состояние объекта group в базе данных */
-&nbsp;    void update(T entity);
+&nbsp;    List&lt;Car&gt; search(
+&nbsp;            String registration_plate,
+&nbsp;            Date from_service_date,
+&nbsp;            Integer displacement,
+&nbsp;            Double power,
+&nbsp;            Double top_speed,
+&nbsp;            Integer seat_count,
+&nbsp;            String transmission_type,
+&nbsp;            String devices,
+&nbsp;            String color,
+&nbsp;            String saloon,
+&nbsp;            Double startPrice,
+&nbsp;            Double finishPrice,
+&nbsp;            String name,
+&nbsp;            String make,
+&nbsp;            Integer year
+&nbsp;    );
 &nbsp;}
 </code>
 </pre>
@@ -93,7 +88,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2022-09-18 15:49</div>
+    <div style="float:right;">generated on 2022-09-22 19:54</div>
 </div>
 </body>
 </html>

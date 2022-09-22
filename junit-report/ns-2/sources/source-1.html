@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > ClientController</title>
+  <title>Coverage Report > AutoModelController</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -21,7 +21,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">info.azatov.carshowroom.controllers</a>
 </div>
 
-<h1>Coverage Summary for Class: ClientController (info.azatov.carshowroom.controllers)</h1>
+<h1>Coverage Summary for Class: AutoModelController (info.azatov.carshowroom.controllers)</h1>
 
 <table class="coverageStats">
 <tr>
@@ -40,7 +40,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">ClientController</td>
+  <td class="name">AutoModelController</td>
 <td class="coverageStat">
   <span class="percent">
     100%
@@ -51,18 +51,18 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    12.5%
+    14.3%
   </span>
   <span class="absValue">
-    (1/8)
+    (1/7)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    7%
+    6.2%
   </span>
   <span class="absValue">
-    (3/43)
+    (2/32)
   </span>
 </td>
 </tr>
@@ -76,12 +76,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <code class="sourceCode" id="sourceCode">&nbsp;package info.azatov.carshowroom.controllers;
 &nbsp;
-&nbsp;import info.azatov.carshowroom.model.dao.ClientDAO;
-&nbsp;import info.azatov.carshowroom.model.dao.ContractDAO;
-&nbsp;import info.azatov.carshowroom.model.dao.impl.ClientDAOImpl;
-&nbsp;import info.azatov.carshowroom.model.dao.impl.ContractDAOImpl;
-&nbsp;import info.azatov.carshowroom.model.entity.Client;
-&nbsp;import info.azatov.carshowroom.model.entity.Contract;
+&nbsp;import info.azatov.carshowroom.model.dao.AutoModelDAO;
+&nbsp;import info.azatov.carshowroom.model.dao.impl.AutoModelDAOImpl;
+&nbsp;import info.azatov.carshowroom.model.entity.AutoModel;
+&nbsp;import info.azatov.carshowroom.model.entity.Car;
 &nbsp;import org.springframework.beans.factory.annotation.Autowired;
 &nbsp;import org.springframework.stereotype.Controller;
 &nbsp;import org.springframework.ui.Model;
@@ -92,106 +90,75 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import java.util.List;
 &nbsp;
 &nbsp;@Controller
-<b class="fc">&nbsp;public class ClientController {</b>
+<b class="fc">&nbsp;public class AutoModelController {</b>
+<b class="fc">&nbsp;    @Autowired</b>
+&nbsp;    private final AutoModelDAO modelDAO = new AutoModelDAOImpl();
 &nbsp;
-&nbsp;    //@Autowired
-<b class="fc">&nbsp;    private final ClientDAO clientDAO = new ClientDAOImpl();</b>
-&nbsp;
-&nbsp;    //@Autowired
-<b class="fc">&nbsp;    private final ContractDAO contractDAO = new ContractDAOImpl();</b>
-&nbsp;
-&nbsp;    @GetMapping(&quot;/clients&quot;)
-&nbsp;    public String clientsListPage(Model model) {
-<b class="nc">&nbsp;        List&lt;Client&gt; clients = (List&lt;Client&gt;)clientDAO.getAll();</b>
-<b class="nc">&nbsp;        model.addAttribute(&quot;clients&quot;, clients);</b>
-&nbsp;
-<b class="nc">&nbsp;        model.addAttribute(&quot;contractDAO&quot;, contractDAO);</b>
-<b class="nc">&nbsp;        return &quot;clients&quot;;</b>
+&nbsp;    @GetMapping(&quot;/addModel&quot;)
+&nbsp;    public String addModelPage(Model model) {
+<b class="nc">&nbsp;        model.addAttribute(&quot;modelDAO&quot;, modelDAO);</b>
+<b class="nc">&nbsp;        return &quot;addModel&quot;;</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    @GetMapping(&quot;/client&quot;)
-&nbsp;    public String clientPage(@RequestParam(name = &quot;clientId&quot;) Long clientId, Model model) {
-<b class="nc">&nbsp;        Client client = clientDAO.getById(clientId);</b>
-<b class="nc">&nbsp;        if (client == null) {</b>
-<b class="nc">&nbsp;            model.addAttribute(</b>
-&nbsp;                    &quot;error_message&quot;,
-<b class="nc">&nbsp;                    String.format(&quot;Клиента с номером %d нет в салоне&quot;, clientId));</b>
+&nbsp;    @GetMapping(&quot;/models&quot;)
+&nbsp;    public String modelListPage(Model model) {
+<b class="nc">&nbsp;        List&lt;AutoModel&gt; models = (List&lt;AutoModel&gt;)modelDAO.getAll();</b>
+<b class="nc">&nbsp;        model.addAttribute(&quot;models&quot;, models);</b>
+<b class="nc">&nbsp;        model.addAttribute(&quot;modelDAO&quot;, modelDAO);</b>
+<b class="nc">&nbsp;        return &quot;models&quot;;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(&quot;/model&quot;)
+&nbsp;    public String modelPage(@RequestParam(name = &quot;model_id&quot;) Long model_id, Model model) {
+<b class="nc">&nbsp;        AutoModel autoModel = modelDAO.getById(model_id);</b>
+<b class="nc">&nbsp;        if (autoModel == null) {</b>
+<b class="nc">&nbsp;            model.addAttribute(&quot;error_message&quot;, String.format(&quot;Модели автомобиля с номером %d нет&quot;, model_id));</b>
 <b class="nc">&nbsp;            return &quot;errorPage&quot;;</b>
 &nbsp;        }
-<b class="nc">&nbsp;        model.addAttribute(&quot;client&quot;, client);</b>
-<b class="nc">&nbsp;        model.addAttribute(&quot;clientDAO&quot;, clientDAO);</b>
-<b class="nc">&nbsp;        return &quot;client&quot;;</b>
+<b class="nc">&nbsp;        model.addAttribute(&quot;model&quot;, autoModel);</b>
+<b class="nc">&nbsp;        model.addAttribute(&quot;modelDAO&quot;, modelDAO);</b>
+<b class="nc">&nbsp;        return &quot;model&quot;;</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    @PostMapping(&quot;/saveClient&quot;)
-&nbsp;    public String saveClient(
-&nbsp;            @RequestParam(name = &quot;clientId&quot;) Long clientId,
-&nbsp;            @RequestParam(name = &quot;clientName&quot;) String clientName,
-&nbsp;            @RequestParam(name = &quot;clientAddress&quot;) String clientAddress,
-&nbsp;            @RequestParam(name = &quot;clientPhone&quot;) String clientPhone,
-&nbsp;            @RequestParam(name = &quot;clientEmail&quot;) String clientEmail,
-&nbsp;            Model model
-&nbsp;    ) {
-<b class="nc">&nbsp;        Client client = clientDAO.getById(clientId);</b>
-<b class="nc">&nbsp;        if (client == null) {</b>
-<b class="nc">&nbsp;            model.addAttribute(</b>
-&nbsp;                    &quot;error_message&quot;,
-<b class="nc">&nbsp;                    String.format(&quot;Клиента с номером %d нет в салоне&quot;, clientId));</b>
+&nbsp;    @PostMapping(&quot;/insertModel&quot;)
+&nbsp;    public String insertModel(@RequestParam(name = &quot;name&quot;) String name,
+&nbsp;                            @RequestParam(name = &quot;make&quot;) String make,
+&nbsp;                            @RequestParam(name = &quot;year&quot;) Integer year,
+&nbsp;                            Model model) {
+<b class="nc">&nbsp;        modelDAO.insert(new AutoModel(null, name, make, year));</b>
+<b class="nc">&nbsp;        return &quot;redirect:/models&quot;;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PostMapping(&quot;/updateModel&quot;)
+&nbsp;    public String updateModel(@RequestParam(name = &quot;model_id&quot;) Long model_id,
+&nbsp;                            @RequestParam(name = &quot;name&quot;) String name,
+&nbsp;                            @RequestParam(name = &quot;make&quot;) String make,
+&nbsp;                            @RequestParam(name = &quot;year&quot;) Integer year,
+&nbsp;                            Model model) {
+<b class="nc">&nbsp;        AutoModel autoModel = modelDAO.getById(model_id);</b>
+<b class="nc">&nbsp;        if (autoModel == null) {</b>
+<b class="nc">&nbsp;            model.addAttribute(&quot;error_message&quot;, String.format(&quot;Модели автомобиля с номером %d нет&quot;, model_id));</b>
 <b class="nc">&nbsp;            return &quot;errorPage&quot;;</b>
 &nbsp;        }
-<b class="nc">&nbsp;        client.setName(clientName);</b>
-<b class="nc">&nbsp;        client.setAddress(clientAddress);</b>
-<b class="nc">&nbsp;        client.setPhone(clientPhone);</b>
-<b class="nc">&nbsp;        client.setEmail(clientEmail);</b>
-<b class="nc">&nbsp;        clientDAO.update(client);</b>
-<b class="nc">&nbsp;        return String.format(&quot;redirect:/client?clientId=%d&quot;, clientId);</b>
+<b class="nc">&nbsp;        autoModel.setName(name);</b>
+<b class="nc">&nbsp;        autoModel.setMake(make);</b>
+<b class="nc">&nbsp;        autoModel.setYear(year);</b>
+<b class="nc">&nbsp;        modelDAO.update(autoModel);</b>
+<b class="nc">&nbsp;        return &quot;redirect:/models&quot;;</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    @PostMapping(&quot;/deleteClient&quot;)
-&nbsp;    public String deleteClient(@RequestParam(name = &quot;clientId&quot;) Long clientId, Model model) {
-<b class="nc">&nbsp;        Client client = clientDAO.getById(clientId);</b>
-<b class="nc">&nbsp;        if (client == null) {</b>
-<b class="nc">&nbsp;            model.addAttribute(</b>
-&nbsp;                    &quot;error_message&quot;,
-<b class="nc">&nbsp;                    String.format(&quot;Клиента с номером %d нет в салоне&quot;, clientId));</b>
+&nbsp;    @PostMapping(&quot;/deleteModel&quot;)
+&nbsp;        public String deleteModel(@RequestParam(name = &quot;model_id&quot;) Long model_id,
+&nbsp;                            Model model) {
+<b class="nc">&nbsp;        AutoModel autoModel = modelDAO.getById(model_id);</b>
+<b class="nc">&nbsp;        if (autoModel == null) {</b>
+<b class="nc">&nbsp;            model.addAttribute(&quot;error_message&quot;, String.format(&quot;Модели автомобиля с номером %d нет&quot;, model_id));</b>
 <b class="nc">&nbsp;            return &quot;errorPage&quot;;</b>
 &nbsp;        }
-<b class="nc">&nbsp;        clientDAO.delete(client);</b>
-<b class="nc">&nbsp;        return &quot;redirect:/clients&quot;;</b>
+<b class="nc">&nbsp;        modelDAO.delete(autoModel);</b>
+<b class="nc">&nbsp;        return &quot;redirect:/models&quot;;</b>
 &nbsp;    }
-&nbsp;
-&nbsp;    @GetMapping(&quot;/addClient&quot;)
-&nbsp;    public String addClientPage(Model model) {
-<b class="nc">&nbsp;        return &quot;addClient&quot;;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    @PostMapping(&quot;/createClient&quot;)
-&nbsp;    public String createClient(
-&nbsp;            @RequestParam(name = &quot;clientName&quot;) String clientName,
-&nbsp;            @RequestParam(name = &quot;clientAddress&quot;) String clientAddress,
-&nbsp;            @RequestParam(name = &quot;clientPhone&quot;) String clientPhone,
-&nbsp;            @RequestParam(name = &quot;clientEmail&quot;) String clientEmail,
-&nbsp;            Model model
-&nbsp;    ) {
-<b class="nc">&nbsp;        clientDAO.save(new Client(null, clientName, clientAddress, clientPhone, clientEmail));</b>
-<b class="nc">&nbsp;        return &quot;redirect:/clients&quot;;</b>
-&nbsp;    }
-&nbsp;
-&nbsp;    @PostMapping(&quot;/deleteOrder&quot;)
-&nbsp;    public String deleteOrder(@RequestParam(name = &quot;orderId&quot;) Long orderId, Model model) {
-<b class="nc">&nbsp;        Contract contract = contractDAO.getById(orderId);</b>
-<b class="nc">&nbsp;        if (contract == null) {</b>
-<b class="nc">&nbsp;            model.addAttribute(</b>
-&nbsp;                    &quot;error_message&quot;,
-<b class="nc">&nbsp;                    String.format(&quot;Заказ с номером %d не зарегистрирован.&quot;, orderId));</b>
-<b class="nc">&nbsp;            return &quot;errorPage&quot;;</b>
-&nbsp;        }
-<b class="nc">&nbsp;        contractDAO.delete(contract);</b>
-<b class="nc">&nbsp;        return &quot;redirect:/clients&quot;;</b>
-&nbsp;    }
-&nbsp;
 &nbsp;}
-&nbsp;
 </code>
 </pre>
 </div>
@@ -215,7 +182,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2022-09-18 15:49</div>
+    <div style="float:right;">generated on 2022-09-22 19:54</div>
 </div>
 </body>
 </html>

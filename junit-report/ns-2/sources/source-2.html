@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > HomeController</title>
+  <title>Coverage Report > CarController</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -21,7 +21,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">info.azatov.carshowroom.controllers</a>
 </div>
 
-<h1>Coverage Summary for Class: HomeController (info.azatov.carshowroom.controllers)</h1>
+<h1>Coverage Summary for Class: CarController (info.azatov.carshowroom.controllers)</h1>
 
 <table class="coverageStats">
 <tr>
@@ -40,7 +40,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 </th>
 </tr>
 <tr>
-  <td class="name">HomeController</td>
+  <td class="name">CarController</td>
 <td class="coverageStat">
   <span class="percent">
     100%
@@ -51,18 +51,18 @@ Current scope:     <a href="../../index.html">all classes</a>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    25%
+    12.5%
   </span>
   <span class="absValue">
-    (1/4)
+    (1/8)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    25%
+    4.8%
   </span>
   <span class="absValue">
-    (1/4)
+    (3/63)
   </span>
 </td>
 </tr>
@@ -76,26 +76,202 @@ Current scope:     <a href="../../index.html">all classes</a>
 <pre>
 <code class="sourceCode" id="sourceCode">&nbsp;package info.azatov.carshowroom.controllers;
 &nbsp;
+&nbsp;import info.azatov.carshowroom.model.dao.AutoModelDAO;
+&nbsp;import info.azatov.carshowroom.model.dao.CarDAO;
+&nbsp;import info.azatov.carshowroom.model.dao.impl.AutoModelDAOImpl;
+&nbsp;import info.azatov.carshowroom.model.dao.impl.CarDAOImpl;
+&nbsp;import info.azatov.carshowroom.model.entity.AutoModel;
+&nbsp;import info.azatov.carshowroom.model.entity.Car;
+&nbsp;import info.azatov.carshowroom.model.entity.Client;
+&nbsp;import info.azatov.carshowroom.model.entity.Contract;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
 &nbsp;import org.springframework.stereotype.Controller;
-&nbsp;import org.springframework.web.bind.annotation.RequestMapping;
+&nbsp;import org.springframework.ui.Model;
+&nbsp;import org.springframework.web.bind.annotation.GetMapping;
+&nbsp;import org.springframework.web.bind.annotation.PostMapping;
+&nbsp;import org.springframework.web.bind.annotation.RequestParam;
+&nbsp;
+&nbsp;import java.sql.Date;
+&nbsp;import java.util.Collection;
+&nbsp;import java.util.List;
 &nbsp;
 &nbsp;@Controller
-<b class="fc">&nbsp;public class HomeController {</b>
-&nbsp;    @RequestMapping(value = { &quot;/&quot;, &quot;/index&quot;})
-&nbsp;    public String index() {
-<b class="nc">&nbsp;        return &quot;index&quot;;</b>
+<b class="fc">&nbsp;public class CarController {</b>
+<b class="fc">&nbsp;    @Autowired</b>
+&nbsp;    private final CarDAO carDAO = new CarDAOImpl();
+<b class="fc">&nbsp;    @Autowired</b>
+&nbsp;    private final AutoModelDAO modelDAO = new AutoModelDAOImpl();
+&nbsp;
+&nbsp;    @GetMapping(&quot;/addCar&quot;)
+&nbsp;    public String addCarPage(Model model) {
+<b class="nc">&nbsp;        model.addAttribute(&quot;modelDAO&quot;, modelDAO);</b>
+<b class="nc">&nbsp;        return &quot;addCar&quot;;</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    @RequestMapping(value = &quot;/allPersons&quot; )
-&nbsp;    public String allPersons() {
-<b class="nc">&nbsp;        return &quot;persons&quot;;</b>
+&nbsp;    @GetMapping(&quot;/cars&quot;)
+&nbsp;    public String carListPage(Model model) {
+<b class="nc">&nbsp;        List&lt;Car&gt; cars = (List&lt;Car&gt;)carDAO.getAll();</b>
+<b class="nc">&nbsp;        model.addAttribute(&quot;cars&quot;, cars);</b>
+<b class="nc">&nbsp;        model.addAttribute(&quot;carDAO&quot;, carDAO);</b>
+<b class="nc">&nbsp;        return &quot;cars&quot;;</b>
 &nbsp;    }
 &nbsp;
-&nbsp;    @RequestMapping(value = &quot;/generateTree&quot;)
-&nbsp;    public String generateTree() {
-<b class="nc">&nbsp;        return &quot;generateTree&quot;;</b>
+&nbsp;    @GetMapping(&quot;/car&quot;)
+&nbsp;    public String carPage(@RequestParam(name = &quot;vin&quot;) Long vin, Model model) {
+<b class="nc">&nbsp;        Car car = carDAO.getById(vin);</b>
+<b class="nc">&nbsp;        if (car == null) {</b>
+<b class="nc">&nbsp;            model.addAttribute(&quot;error_message&quot;, String.format(&quot;Машины с номером %d нет в салоне&quot;, vin));</b>
+<b class="nc">&nbsp;            return &quot;errorPage&quot;;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        model.addAttribute(&quot;car&quot;, car);</b>
+<b class="nc">&nbsp;        model.addAttribute(&quot;carDAO&quot;, carDAO);</b>
+<b class="nc">&nbsp;        return &quot;car&quot;;</b>
 &nbsp;    }
 &nbsp;
+&nbsp;    @PostMapping(&quot;/insertCar&quot;)
+&nbsp;    public String insertCar(@RequestParam(name = &quot;model_name&quot;) String model_name,
+&nbsp;                            @RequestParam(name = &quot;registration_plate&quot;) String registration_plate,
+&nbsp;                            @RequestParam(name = &quot;price&quot;) Double price,
+&nbsp;                            @RequestParam(name = &quot;kilometers&quot;) Double kilometers,
+&nbsp;                            @RequestParam(name = &quot;service_date&quot;) Date service_date,
+&nbsp;                            @RequestParam(name = &quot;displacement&quot;) Integer displacement,
+&nbsp;                            @RequestParam(name = &quot;power&quot;) Double power,
+&nbsp;                            @RequestParam(name = &quot;top_speed&quot;) Double top_speed,
+&nbsp;                            @RequestParam(name = &quot;seat_count&quot;) Integer seat_count,
+&nbsp;                            @RequestParam(name = &quot;transmission_type&quot;) String transmission_type,
+&nbsp;                            @RequestParam(name = &quot;devices&quot;) String devices,
+&nbsp;                            @RequestParam(name = &quot;color&quot;) String color,
+&nbsp;                            @RequestParam(name = &quot;saloon&quot;) String saloon,
+&nbsp;                            Model model) {
+<b class="nc">&nbsp;        List&lt;AutoModel&gt; auto_model = modelDAO.getModelsByName(model_name);</b>
+<b class="nc">&nbsp;        if (auto_model.size() == 0) {</b>
+<b class="nc">&nbsp;            model.addAttribute(&quot;error_message&quot;, String.format(&quot;Модель %s отсутствует в базе&quot;, model_name));</b>
+<b class="nc">&nbsp;            return &quot;errorPage&quot;;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        carDAO.insert(new Car(</b>
+&nbsp;                null,
+<b class="nc">&nbsp;                auto_model.get(0),</b>
+&nbsp;                registration_plate,
+&nbsp;                price,
+&nbsp;                kilometers,
+&nbsp;                service_date,
+&nbsp;                displacement,
+&nbsp;                power,
+&nbsp;                top_speed,
+&nbsp;                seat_count,
+&nbsp;                transmission_type,
+&nbsp;                devices,
+&nbsp;                color,
+&nbsp;                saloon));
+<b class="nc">&nbsp;        return &quot;redirect:/cars&quot;;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PostMapping(&quot;/updateCar&quot;)
+&nbsp;    public String updateCar(@RequestParam(name = &quot;vin&quot;) Long vin,
+&nbsp;                            @RequestParam(name = &quot;model_name&quot;) String model_name,
+&nbsp;                            @RequestParam(name = &quot;registration_plate&quot;) String registration_plate,
+&nbsp;                            @RequestParam(name = &quot;price&quot;) Double price,
+&nbsp;                            @RequestParam(name = &quot;kilometers&quot;) Double kilometers,
+&nbsp;                            @RequestParam(name = &quot;service_date&quot;) Date service_date,
+&nbsp;                            @RequestParam(name = &quot;displacement&quot;) Integer displacement,
+&nbsp;                            @RequestParam(name = &quot;power&quot;) Double power,
+&nbsp;                            @RequestParam(name = &quot;top_speed&quot;) Double top_speed,
+&nbsp;                            @RequestParam(name = &quot;seat_count&quot;) Integer seat_count,
+&nbsp;                            @RequestParam(name = &quot;transmission_type&quot;) String transmission_type,
+&nbsp;                            @RequestParam(name = &quot;devices&quot;) String devices,
+&nbsp;                            @RequestParam(name = &quot;color&quot;) String color,
+&nbsp;                            @RequestParam(name = &quot;saloon&quot;) String saloon,
+&nbsp;                            Model model) {
+<b class="nc">&nbsp;        Car car = carDAO.getById(vin);</b>
+<b class="nc">&nbsp;        if (car == null) {</b>
+<b class="nc">&nbsp;            model.addAttribute(&quot;error_message&quot;, String.format(&quot;Машины с номером %d нет в салоне&quot;, vin));</b>
+<b class="nc">&nbsp;            return &quot;errorPage&quot;;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        car.setColor(color);</b>
+<b class="nc">&nbsp;        List&lt;AutoModel&gt; car_model = modelDAO.getModelsByName(model_name);</b>
+<b class="nc">&nbsp;        if (car_model.size() == 0) {</b>
+<b class="nc">&nbsp;            model.addAttribute(&quot;error_message&quot;, String.format(&quot;Нет модели %s&quot;, model_name));</b>
+<b class="nc">&nbsp;            return &quot;errorPage&quot;;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        car.setModel(car_model.get(0));</b>
+<b class="nc">&nbsp;            car.setRegistration_plate(registration_plate);</b>
+<b class="nc">&nbsp;            car.setPrice(price);</b>
+<b class="nc">&nbsp;            car.setKilometers(kilometers);</b>
+<b class="nc">&nbsp;            car.setService_date(service_date);</b>
+<b class="nc">&nbsp;            car.setDisplacement(displacement);</b>
+<b class="nc">&nbsp;            car.setPower(power);</b>
+<b class="nc">&nbsp;            car.setTop_speed(top_speed);</b>
+<b class="nc">&nbsp;            car.setSeat_count(seat_count);</b>
+<b class="nc">&nbsp;            car.setTransmission_type(transmission_type);</b>
+<b class="nc">&nbsp;            car.setDevices(devices);</b>
+<b class="nc">&nbsp;            car.setColor(color);</b>
+<b class="nc">&nbsp;            car.setSaloon(saloon);</b>
+<b class="nc">&nbsp;        carDAO.update(car);</b>
+<b class="nc">&nbsp;        return String.format(&quot;redirect:/car?vin=%d&quot;, vin);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(&quot;/searchCar&quot;)
+&nbsp;    public String searchCar(
+&nbsp;            @RequestParam(name = &quot;registration_plate&quot;) String registration_plate,
+&nbsp;            @RequestParam(name = &quot;startPrice&quot;) Double startPrice,
+&nbsp;            @RequestParam(name = &quot;finishPrice&quot;) Double finishPrice,
+&nbsp;            @RequestParam(name = &quot;service_date&quot;) Date service_date,
+&nbsp;            @RequestParam(name = &quot;displacement&quot;) Integer displacement,
+&nbsp;            @RequestParam(name = &quot;power&quot;) Double power,
+&nbsp;            @RequestParam(name = &quot;top_speed&quot;) Double top_speed,
+&nbsp;            @RequestParam(name = &quot;seat_count&quot;) Integer seat_count,
+&nbsp;            @RequestParam(name = &quot;transmission_type&quot;) String transmission_type,
+&nbsp;            @RequestParam(name = &quot;devices&quot;) String devices,
+&nbsp;            @RequestParam(name = &quot;color&quot;) String color,
+&nbsp;            @RequestParam(name = &quot;saloon&quot;) String saloon,
+&nbsp;            @RequestParam(name = &quot;name&quot;) String name,
+&nbsp;            @RequestParam(name = &quot;make&quot;) String make,
+&nbsp;            @RequestParam(name = &quot;year&quot;) Integer year,
+&nbsp;
+&nbsp;            Model model
+&nbsp;    ) {
+<b class="nc">&nbsp;        Collection&lt;Car&gt; cars = carDAO.search(</b>
+&nbsp;                registration_plate,
+&nbsp;                service_date,
+&nbsp;                displacement,
+&nbsp;                power,
+&nbsp;                top_speed,
+&nbsp;                seat_count,
+&nbsp;                transmission_type,
+&nbsp;                devices,
+&nbsp;                color,
+&nbsp;                saloon,
+&nbsp;                startPrice,
+&nbsp;                finishPrice,
+&nbsp;                name,
+&nbsp;                make,
+&nbsp;                year
+&nbsp;                );
+<b class="nc">&nbsp;        if (cars.size() == 1) {</b>
+<b class="nc">&nbsp;            return &quot;redirect:/car?vin=&quot; + cars.iterator().next().getId();</b>
+&nbsp;        }
+<b class="nc">&nbsp;        if (cars.size() &lt; 1) {</b>
+<b class="nc">&nbsp;            model.addAttribute(</b>
+&nbsp;                    &quot;error_message&quot;, &quot;Не нашлось автомобилей, удовлетворяющих запросу.&quot;);
+<b class="nc">&nbsp;            return &quot;errorPage&quot;;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        model.addAttribute(&quot;cars&quot;, cars);</b>
+<b class="nc">&nbsp;        model.addAttribute(&quot;carDAO&quot;, carDAO);</b>
+<b class="nc">&nbsp;        model.addAttribute(&quot;modelDAO&quot;, modelDAO);</b>
+<b class="nc">&nbsp;        return &quot;cars&quot;;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PostMapping(&quot;/deleteCar&quot;)
+&nbsp;        public String deleteCar(@RequestParam(name = &quot;vin&quot;) Long vin,
+&nbsp;                            Model model) {
+<b class="nc">&nbsp;        Car car = carDAO.getById(vin);</b>
+<b class="nc">&nbsp;        if (car == null) {</b>
+<b class="nc">&nbsp;            model.addAttribute(&quot;error_message&quot;, String.format(&quot;Машины с номером %d нет в салоне&quot;, vin));</b>
+<b class="nc">&nbsp;            return &quot;errorPage&quot;;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        carDAO.delete(car);</b>
+<b class="nc">&nbsp;        return &quot;redirect:/cars&quot;;</b>
+&nbsp;    }
 &nbsp;}
 </code>
 </pre>
@@ -120,7 +296,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2022-09-18 15:49</div>
+    <div style="float:right;">generated on 2022-09-22 19:54</div>
 </div>
 </body>
 </html>

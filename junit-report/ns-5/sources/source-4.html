@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html id="htmlId">
 <head>
-  <title>Coverage Report > AutoModelDAO</title>
+  <title>Coverage Report > ContractDAO</title>
   <style type="text/css">
     @import "../../css/coverage.css";
     @import "../../css/idea.min.css";
@@ -21,14 +21,14 @@ Current scope:     <a href="../../index.html">all classes</a>
     <a href="../index.html">info.azatov.carshowroom.model.dao</a>
 </div>
 
-<h1>Coverage Summary for Class: AutoModelDAO (info.azatov.carshowroom.model.dao)</h1>
+<h1>Coverage Summary for Class: ContractDAO (info.azatov.carshowroom.model.dao)</h1>
 
 <table class="coverageStats">
 <tr>
   <th class="name">Class</th>
 </tr>
 <tr>
-  <td class="name">AutoModelDAO</td>
+  <td class="name">ContractDAO</td>
 </tr>
 
 </table>
@@ -42,15 +42,13 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;import java.util.List;
 &nbsp;
-&nbsp;import info.azatov.carshowroom.model.entity.AutoModel;
+&nbsp;import info.azatov.carshowroom.model.entity.Client;
+&nbsp;import info.azatov.carshowroom.model.entity.Contract;
 &nbsp;
-&nbsp;public interface AutoModelDAO extends BaseDAO&lt;AutoModel, Long&gt; {
+&nbsp;public interface ContractDAO extends BaseDAO&lt;Contract, Long&gt; {
 &nbsp;
-&nbsp;    List&lt;AutoModel&gt; getModelsByName(String name);
-&nbsp;    List&lt;AutoModel&gt; getModelsByMake(String make);
-&nbsp;
+&nbsp;    List&lt;Contract&gt; getContractsByClient(Client client);
 &nbsp;}
-&nbsp;
 </code>
 </pre>
 </div>
@@ -74,7 +72,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2022-09-18 15:49</div>
+    <div style="float:right;">generated on 2022-09-22 19:54</div>
 </div>
 </body>
 </html>

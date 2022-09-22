@@ -1,0 +1,236 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ClientController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">info.azatov.carshowroom.controllers</a>
+</div>
+
+<h1>Coverage Summary for Class: ClientController (info.azatov.carshowroom.controllers)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ClientController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    12.5%
+  </span>
+  <span class="absValue">
+    (1/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    6.2%
+  </span>
+  <span class="absValue">
+    (3/48)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package info.azatov.carshowroom.controllers;
+&nbsp;
+&nbsp;import info.azatov.carshowroom.model.dao.ClientDAO;
+&nbsp;import info.azatov.carshowroom.model.dao.ContractDAO;
+&nbsp;import info.azatov.carshowroom.model.dao.impl.ClientDAOImpl;
+&nbsp;import info.azatov.carshowroom.model.dao.impl.ContractDAOImpl;
+&nbsp;import info.azatov.carshowroom.model.entity.Client;
+&nbsp;import info.azatov.carshowroom.model.entity.Contract;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.stereotype.Controller;
+&nbsp;import org.springframework.ui.Model;
+&nbsp;import org.springframework.web.bind.annotation.GetMapping;
+&nbsp;import org.springframework.web.bind.annotation.PostMapping;
+&nbsp;import org.springframework.web.bind.annotation.RequestParam;
+&nbsp;
+&nbsp;import java.sql.Date;
+&nbsp;import java.util.Collection;
+&nbsp;
+&nbsp;@Controller
+<b class="fc">&nbsp;public class ClientController {</b>
+&nbsp;
+<b class="fc">&nbsp;    @Autowired</b>
+&nbsp;    private final ClientDAO clientDAO = new ClientDAOImpl();
+&nbsp;
+<b class="fc">&nbsp;    @Autowired</b>
+&nbsp;    private final ContractDAO contractDAO = new ContractDAOImpl();
+&nbsp;
+&nbsp;    @GetMapping(&quot;/clients&quot;)
+&nbsp;    public String clientsListPage(Model model) {
+<b class="nc">&nbsp;        Collection&lt;Client&gt; clients = clientDAO.getAll();</b>
+<b class="nc">&nbsp;        if (model.containsAttribute(&quot;suggestions&quot;)) {</b>
+<b class="nc">&nbsp;            model.addAttribute(&quot;clients&quot;, model.getAttribute(&quot;suggestions&quot;));</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            model.addAttribute(&quot;clients&quot;, clients);</b>
+&nbsp;        }
+<b class="nc">&nbsp;        model.addAttribute(&quot;contractDAO&quot;, contractDAO);</b>
+<b class="nc">&nbsp;        return &quot;clients&quot;;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(&quot;/client&quot;)
+&nbsp;    public String clientPage(@RequestParam(name = &quot;client_id&quot;) Long client_id, Model model) {
+<b class="nc">&nbsp;        Client client = clientDAO.getById(client_id);</b>
+<b class="nc">&nbsp;        if (client == null) {</b>
+<b class="nc">&nbsp;            model.addAttribute(</b>
+&nbsp;                    &quot;error_message&quot;,
+<b class="nc">&nbsp;                    String.format(&quot;Клиента с номером %d нет в салоне&quot;, client_id));</b>
+<b class="nc">&nbsp;            return &quot;errorPage&quot;;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        model.addAttribute(&quot;client&quot;, client);</b>
+<b class="nc">&nbsp;        model.addAttribute(&quot;clientDAO&quot;, clientDAO);</b>
+<b class="nc">&nbsp;        return &quot;client&quot;;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PostMapping(&quot;/updateClient&quot;)
+&nbsp;    public String updateClient(
+&nbsp;            @RequestParam(name = &quot;client_id&quot;) Long client_id,
+&nbsp;            @RequestParam(name = &quot;client_name&quot;) String client_name,
+&nbsp;            @RequestParam(name = &quot;client_address&quot;) String client_address,
+&nbsp;            @RequestParam(name = &quot;client_phone&quot;) String client_phone,
+&nbsp;            @RequestParam(name = &quot;client_email&quot;) String client_email,
+&nbsp;            Model model
+&nbsp;    ) {
+<b class="nc">&nbsp;        Client client = clientDAO.getById(client_id);</b>
+<b class="nc">&nbsp;        if (client == null) {</b>
+<b class="nc">&nbsp;            model.addAttribute(</b>
+&nbsp;                    &quot;error_message&quot;,
+<b class="nc">&nbsp;                    String.format(&quot;Клиента с номером %d нет в салоне&quot;, client_id));</b>
+<b class="nc">&nbsp;            return &quot;errorPage&quot;;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        client.setName(client_name);</b>
+<b class="nc">&nbsp;        client.setAddress(client_address);</b>
+<b class="nc">&nbsp;        client.setPhone(client_phone);</b>
+<b class="nc">&nbsp;        client.setEmail(client_email);</b>
+<b class="nc">&nbsp;        clientDAO.update(client);</b>
+<b class="nc">&nbsp;        return &quot;redirect:/clients&quot;;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PostMapping(&quot;/deleteClient&quot;)
+&nbsp;    public String deleteClient(@RequestParam(name = &quot;client_id&quot;) Long client_id, Model model) {
+<b class="nc">&nbsp;        Client client = clientDAO.getById(client_id);</b>
+<b class="nc">&nbsp;        if (client == null) {</b>
+<b class="nc">&nbsp;            model.addAttribute(</b>
+&nbsp;                    &quot;error_message&quot;,
+<b class="nc">&nbsp;                    String.format(&quot;Клиента с номером %d нет в салоне&quot;, client_id));</b>
+<b class="nc">&nbsp;            return &quot;errorPage&quot;;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        clientDAO.delete(client);</b>
+<b class="nc">&nbsp;        return &quot;redirect:/clients&quot;;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(&quot;/addClient&quot;)
+&nbsp;    public String addClientPage(Model model) {
+<b class="nc">&nbsp;        return &quot;addClient&quot;;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PostMapping(&quot;/insertClient&quot;)
+&nbsp;    public String insertClient(
+&nbsp;            @RequestParam(name = &quot;client_name&quot;) String client_name,
+&nbsp;            @RequestParam(name = &quot;client_address&quot;) String client_address,
+&nbsp;            @RequestParam(name = &quot;client_phone&quot;) String client_phone,
+&nbsp;            @RequestParam(name = &quot;client_email&quot;) String client_email,
+&nbsp;            Model model
+&nbsp;    ) {
+<b class="nc">&nbsp;        clientDAO.insert(new Client(null, client_name, client_address, client_phone, client_email));</b>
+<b class="nc">&nbsp;        return &quot;redirect:/clients&quot;;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(&quot;/searchClient&quot;)
+&nbsp;    public String searchClient(
+&nbsp;            @RequestParam(name = &quot;vin&quot;, required = false) Long vin,
+&nbsp;            @RequestParam(name = &quot;startDate&quot;, required = false) Date startDate,
+&nbsp;            @RequestParam(name = &quot;finishDate&quot;, required = false) Date finishDate,
+&nbsp;            @RequestParam(name = &quot;test_drive&quot;, required = false) Boolean test_drive,
+&nbsp;            @RequestParam(name = &quot;status&quot;, required = false) Contract.ContractStatus status,
+&nbsp;            Model model
+&nbsp;    ) {
+<b class="nc">&nbsp;        Collection&lt;Client&gt; clients = clientDAO.getClientByContract(vin, status, startDate, finishDate, test_drive);</b>
+<b class="nc">&nbsp;        if (clients.size() == 1) {</b>
+&nbsp;
+<b class="nc">&nbsp;            return &quot;redirect:/client?client_id=&quot; + clients.iterator().next().getId();</b>
+&nbsp;        }
+<b class="nc">&nbsp;        if (clients.size() &lt; 1) {</b>
+<b class="nc">&nbsp;            model.addAttribute(</b>
+&nbsp;                    &quot;error_message&quot;, &quot;Не нашлось клиентов, удовлетворяющих запросу.&quot;);
+<b class="nc">&nbsp;            return &quot;errorPage&quot;;</b>
+&nbsp;        }
+<b class="nc">&nbsp;        model.addAttribute(&quot;clients&quot;, clients);</b>
+<b class="nc">&nbsp;        model.addAttribute(&quot;clientDAO&quot;, clientDAO);</b>
+<b class="nc">&nbsp;        model.addAttribute(&quot;contractDAO&quot;, contractDAO);</b>
+<b class="nc">&nbsp;        return &quot;clients&quot;;</b>
+&nbsp;    }
+&nbsp;}
+&nbsp;
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2022-09-22 19:54</div>
+</div>
+</body>
+</html>

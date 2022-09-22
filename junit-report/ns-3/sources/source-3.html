@@ -51,15 +51,15 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (36/36)
+    (41/41)
   </span>
 </td>
 </tr>
   <tr>
-    <td class="name">CarDAOImpl$$EnhancerBySpringCGLIB$$f48926c3</td>
+    <td class="name">CarDAOImpl$$EnhancerBySpringCGLIB$$68a64836</td>
   </tr>
   <tr>
-    <td class="name">CarDAOImpl$$EnhancerBySpringCGLIB$$f48926c3$$FastClassBySpringCGLIB$$9a6d472e</td>
+    <td class="name">CarDAOImpl$$EnhancerBySpringCGLIB$$68a64836$$FastClassBySpringCGLIB$$399b1fc9</td>
   </tr>
   <tr>
     <td class="name">CarDAOImpl$$FastClassBySpringCGLIB$$7b75b4ce</td>
@@ -79,7 +79,7 @@ Current scope:     <a href="../../index.html">all classes</a>
     100%
   </span>
   <span class="absValue">
-    (36/36)
+    (41/41)
   </span>
 </td>
 </tr>
@@ -102,6 +102,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;import javax.persistence.criteria.CriteriaQuery;
 &nbsp;import javax.persistence.criteria.Predicate;
 &nbsp;import javax.persistence.criteria.Root;
+&nbsp;import java.sql.Date;
 &nbsp;import java.util.ArrayList;
 &nbsp;import java.util.List;
 &nbsp;
@@ -113,7 +114,23 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    @Override
-&nbsp;    public List&lt;Car&gt; search(Car filter, Double startPrice, Double finishPrice, String name, String make) {
+&nbsp;    public List&lt;Car&gt; search(
+&nbsp;            String registration_plate,
+&nbsp;            Date from_service_date,
+&nbsp;            Integer displacement,
+&nbsp;            Double power,
+&nbsp;            Double top_speed,
+&nbsp;            Integer seat_count,
+&nbsp;            String transmission_type,
+&nbsp;            String devices,
+&nbsp;            String color,
+&nbsp;            String saloon,
+&nbsp;            Double startPrice,
+&nbsp;            Double finishPrice,
+&nbsp;            String name,
+&nbsp;            String make,
+&nbsp;            Integer year
+&nbsp;            ) {
 <b class="fc">&nbsp;        try (Session session = sessionFactory.openSession()) {</b>
 <b class="fc">&nbsp;            CriteriaBuilder cb = session.getCriteriaBuilder();</b>
 <b class="fc">&nbsp;            CriteriaQuery&lt;Car&gt; criteria = cb.createQuery(Car.class);</b>
@@ -121,24 +138,26 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;            criteria.select(root);</b>
 &nbsp;
 <b class="fc">&nbsp;            List&lt;Predicate&gt; predicates = new ArrayList&lt;&gt;();</b>
-<b class="fc">&nbsp;            if (filter != null) {</b>
-<b class="fc">&nbsp;                if (filter.getColor() != null)</b>
-<b class="fc">&nbsp;                    predicates.add(cb.equal(root.get(&quot;color&quot;), filter.getColor()));</b>
-<b class="fc">&nbsp;                if (filter.getDisplacement() != null)</b>
-<b class="fc">&nbsp;                    predicates.add(cb.ge(root.get(&quot;displacement&quot;), filter.getDisplacement()));</b>
-<b class="fc">&nbsp;                if (filter.getDevices() != null)</b>
-<b class="fc">&nbsp;                    predicates.add(cb.like(root.get(&quot;devices&quot;), filter.getDevices()));</b>
-<b class="fc">&nbsp;                if (filter.getPower() != null)</b>
-<b class="fc">&nbsp;                    predicates.add(cb.ge(root.get(&quot;power&quot;), filter.getPower()));</b>
-<b class="fc">&nbsp;                if (filter.getSaloon() != null)</b>
-<b class="fc">&nbsp;                    predicates.add(cb.like(root.get(&quot;saloon&quot;), filter.getSaloon()));</b>
-<b class="fc">&nbsp;                if (filter.getSeat_count() != null)</b>
-<b class="fc">&nbsp;                    predicates.add(cb.equal(root.get(&quot;seat_count&quot;), filter.getSeat_count()));</b>
-<b class="fc">&nbsp;                if (filter.getTop_speed() != null)</b>
-<b class="fc">&nbsp;                    predicates.add(cb.ge(root.get(&quot;top_speed&quot;), filter.getTop_speed()));</b>
-<b class="fc">&nbsp;                if (filter.getTransmission_type() != null)</b>
-<b class="fc">&nbsp;                    predicates.add(cb.equal(root.get(&quot;transmission_type&quot;), filter.getTransmission_type()));</b>
-&nbsp;            }
+<b class="fc">&nbsp;            if (registration_plate != null)</b>
+<b class="fc">&nbsp;                predicates.add(cb.equal(root.get(&quot;registration_plate&quot;), registration_plate));</b>
+<b class="fc">&nbsp;            if (color != null)</b>
+<b class="fc">&nbsp;               predicates.add(cb.equal(root.get(&quot;color&quot;), color));</b>
+<b class="fc">&nbsp;            if (from_service_date != null)</b>
+<b class="fc">&nbsp;                predicates.add(cb.greaterThanOrEqualTo(root.get(&quot;service_date&quot;), from_service_date));</b>
+<b class="fc">&nbsp;            if (displacement != null)</b>
+<b class="fc">&nbsp;                predicates.add(cb.ge(root.get(&quot;displacement&quot;), displacement));</b>
+<b class="fc">&nbsp;            if (devices != null)</b>
+<b class="fc">&nbsp;                predicates.add(cb.like(root.get(&quot;devices&quot;), devices));</b>
+<b class="fc">&nbsp;            if (power != null)</b>
+<b class="fc">&nbsp;                predicates.add(cb.ge(root.get(&quot;power&quot;), power));</b>
+<b class="fc">&nbsp;            if (saloon != null)</b>
+<b class="fc">&nbsp;                predicates.add(cb.like(root.get(&quot;saloon&quot;), saloon));</b>
+<b class="fc">&nbsp;            if (seat_count != null)</b>
+<b class="fc">&nbsp;                predicates.add(cb.equal(root.get(&quot;seat_count&quot;), seat_count));</b>
+<b class="fc">&nbsp;            if (top_speed != null)</b>
+<b class="fc">&nbsp;                predicates.add(cb.ge(root.get(&quot;top_speed&quot;), top_speed));</b>
+<b class="fc">&nbsp;            if (transmission_type != null)</b>
+<b class="fc">&nbsp;                predicates.add(cb.equal(root.get(&quot;transmission_type&quot;), transmission_type));</b>
 <b class="fc">&nbsp;            if (startPrice != null)</b>
 <b class="fc">&nbsp;                predicates.add(cb.ge(root.get(&quot;price&quot;), startPrice));</b>
 <b class="fc">&nbsp;            if (finishPrice != null)</b>
@@ -147,6 +166,8 @@ Current scope:     <a href="../../index.html">all classes</a>
 <b class="fc">&nbsp;                predicates.add(cb.equal(root.get(&quot;model&quot;).get(&quot;name&quot;), name));</b>
 <b class="fc">&nbsp;            if (make != null)</b>
 <b class="fc">&nbsp;                predicates.add(cb.equal(root.get(&quot;model&quot;).get(&quot;make&quot;), make));</b>
+<b class="fc">&nbsp;            if (year != null)</b>
+<b class="fc">&nbsp;                predicates.add(cb.equal(root.get(&quot;model&quot;).get(&quot;year&quot;), year));</b>
 <b class="fc">&nbsp;            Predicate predicate = cb.and(predicates.toArray(Predicate[]::new));</b>
 <b class="fc">&nbsp;            criteria.where(predicate);</b>
 &nbsp;
@@ -178,7 +199,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2022-09-18 15:49</div>
+    <div style="float:right;">generated on 2022-09-22 19:54</div>
 </div>
 </body>
 </html>

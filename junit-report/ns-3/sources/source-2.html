@@ -130,7 +130,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    @Override
-&nbsp;    public void save(T entity) {
+&nbsp;    public void insert(T entity) {
 <b class="fc">&nbsp;        try (Session session = sessionFactory.openSession()) {</b>
 <b class="fc">&nbsp;            if (entity.getId() != null) {</b>
 <b class="fc">&nbsp;                entity.setId(null);</b>
@@ -142,11 +142,11 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    @Override
-&nbsp;    public void saveCollection(Collection&lt;T&gt; entities) {
+&nbsp;    public void insertCollection(Collection&lt;T&gt; entities) {
 <b class="fc">&nbsp;        try (Session session = sessionFactory.openSession()) {</b>
 <b class="fc">&nbsp;            session.beginTransaction();</b>
 <b class="fc">&nbsp;            for (T entity : entities) {</b>
-<b class="fc">&nbsp;                this.save(entity);</b>
+<b class="fc">&nbsp;                this.insert(entity);</b>
 <b class="fc">&nbsp;            }</b>
 <b class="fc">&nbsp;            session.getTransaction().commit();</b>
 <b class="fc">&nbsp;        }</b>
@@ -203,7 +203,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2022-09-18 15:49</div>
+    <div style="float:right;">generated on 2022-09-22 19:54</div>
 </div>
 </body>
 </html>
